@@ -1,0 +1,10 @@
+-IE:/C++/OCCTSketcher
+-IE:/C++/OCCTSketcher/Build
+-ID:/Program Files (x86)/OCCT/inc
+-IE:/C++/OCCTSketcher
+-IE:/C++/OCCTSketcher/Build
+-DWIN32
+--compiler-flavor=msvc
+-o
+E:/C++/OCCTSketcher/Build/moc_Sketcher_CommandCircle3P.cpp
+E:/C++/OCCTSketcher/Sketcher_CommandCircle3P.h
