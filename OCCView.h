@@ -172,7 +172,7 @@ private:
 	Standard_Integer									myYmin;
 	Standard_Integer									myXmax;
 	Standard_Integer									myYmax;
-	Quantity_Factor										myCurZoom;
+    Standard_Real										myCurZoom;
 	Standard_Boolean									myDegenerateModeIsOn;
 	QList<QAction*>*									myViewActions;
 	QList<QAction *> *									myDrawActions;
@@ -184,8 +184,8 @@ private:
 	QCheckBox *											PolylineModeCheck;
 	bool												GRIDCounter;
 	Sketcher *											mySketcher;
-	V3d_Coordinate										my_v3dX, my_v3dY, my_v3dZ;
-	Quantity_Parameter									projVx, projVy, projVz;
+    Standard_Real										my_v3dX, my_v3dY, my_v3dZ;
+    Standard_Real									projVx, projVy, projVz;
 };
 
 #endif

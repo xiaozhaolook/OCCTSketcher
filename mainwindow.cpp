@@ -51,7 +51,9 @@
 #include <BRepAlgoAPI_Fuse.hxx>
 #include <BRepAlgoAPI_Common.hxx>
 
-#include <BRepAlgo_Section.hxx>
+//#include <BRepAlgo_Section.hxx>
+
+#include <BRepAlgo.hxx>
 
 #include <AIS_Shape.hxx>
 

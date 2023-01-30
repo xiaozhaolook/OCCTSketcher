@@ -108,19 +108,19 @@ gp_Pnt2d Sketcher_Snap::MouseMoveEvent(const gp_Pnt2d& tempPnt2d)
 		myAIS_Point->SetComponent(myGeom_Point);
 		if (firstDisplay)
 		{
-			myContext->Display(myAIS_Point, 0, -1);
+            myContext->Display(myAIS_Point, 0, -1,1);
 			DrawRelation();
 			firstDisplay = Standard_False;
 		}
 		else
 		{
-			myContext->Redisplay(myAIS_Point);
+            myContext->Redisplay(myAIS_Point,1);
 			DrawRelation();
 		}
 	}
 	else
 	{
-		myContext->Remove(myAIS_Point);
+        myContext->Remove(myAIS_Point,1);
 		EraseRelation();
 		firstDisplay = Standard_True;
 	}
@@ -136,7 +136,7 @@ gp_Pnt2d Sketcher_Snap::MouseMoveEvent(const gp_Pnt2d& tempPnt2d)
 void Sketcher_Snap::EraseSnap()
 {
 	firstDisplay = Standard_True;
-	myContext->Remove(myAIS_Point);
+    myContext->Remove(myAIS_Point,1);
 	EraseRelation();
 }
 
@@ -166,7 +166,7 @@ Standard_Boolean Sketcher_Snap::AnalyserEvent(const gp_Pnt2d& tempPnt2d, gp_Pnt2
 */
 void Sketcher_Snap::DrawRelation()
 {
-	myContext->SetSelected(curHilightedObj);
+    myContext->SetSelected(curHilightedObj,1);
 }
 
 /**
@@ -176,7 +176,7 @@ void Sketcher_Snap::DrawRelation()
 */
 void Sketcher_Snap::EraseRelation()
 {
-	myContext->ClearSelected();
+    myContext->ClearSelected(1);
 }
 
 /**

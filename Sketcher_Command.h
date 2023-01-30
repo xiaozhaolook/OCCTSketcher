@@ -2,7 +2,7 @@
 #define SKETCHER_COMMAND_H SKETCHER_COMMAND_H
 
 #include <Standard_Macro.hxx>
-#include <MMgt_TShared.hxx>
+#include <Standard_Transient.hxx>
 #include <Standard_DefineHandle.hxx>
 
 #include "Sketcher_Object.h"
@@ -26,10 +26,10 @@ class AIS_InteractiveContext;
 class gp_Pnt2d;
 
 class Sketcher_Command;
-DEFINE_STANDARD_HANDLE(Sketcher_Command, MMgt_TShared)
+DEFINE_STANDARD_HANDLE(Sketcher_Command, Standard_Transient)
 
 //base class of commands entering objects
-class Sketcher_Command : public MMgt_TShared
+class Sketcher_Command : public Standard_Transient
 {
 public:
 
@@ -180,7 +180,7 @@ public:
 	*/
 	virtual void SetPolylineMode(Standard_Boolean mode);
 	// Type management
-	DEFINE_STANDARD_RTTIEXT(Sketcher_Command, MMgt_TShared)
+    DEFINE_STANDARD_RTTIEXT(Sketcher_Command, Standard_Transient)
 
 
 protected:

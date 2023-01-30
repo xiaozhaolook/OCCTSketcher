@@ -81,8 +81,8 @@ void Sketcher_SnapLineParallel::DrawRelation()
 {
 	myParRelation->SetFirstShape(FirstEdge);
 	myParRelation->SetSecondShape(SecondEdge);
-	if (firstDisplay) myContext->Display(myParRelation, 0, -1);
-	else myContext->Redisplay(myParRelation);
+    if (firstDisplay) myContext->Display(myParRelation, 0, -1,1);
+    else myContext->Redisplay(myParRelation,1);
 }
 
 /**
@@ -92,5 +92,5 @@ void Sketcher_SnapLineParallel::DrawRelation()
 */
 void Sketcher_SnapLineParallel::EraseRelation()
 {
-	myContext->Remove(myParRelation);
+    myContext->Remove(myParRelation,1);
 }

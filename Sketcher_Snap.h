@@ -2,7 +2,7 @@
 #define Sketcher_Snap_H Sketcher_Snap_H
 
 #include <Standard_Macro.hxx>
-#include <MMgt_TShared.hxx>
+#include <Standard_Transient.hxx>
 #include <Standard_DefineHandle.hxx>
 
 #include "Sketcher_Object.h"
@@ -35,10 +35,10 @@ class Geom_CartesianPoint;
 class Geom2dAPI_ProjectPointOnCurve;
 
 class Sketcher_Snap;
-DEFINE_STANDARD_HANDLE(Sketcher_Snap, MMgt_TShared)
+DEFINE_STANDARD_HANDLE(Sketcher_Snap, Standard_Transient)
 
 //base class of Snap
-class Sketcher_Snap : public MMgt_TShared{
+class Sketcher_Snap : public Standard_Transient{
 public:
 	/**
 	* \fn Sketcher_Snap()
@@ -161,7 +161,7 @@ public:
 	*/
 	virtual void setFirstPnt(const gp_Pnt2d& p, TangentType ttype);
 
-	DEFINE_STANDARD_RTTIEXT(Sketcher_Snap, MMgt_TShared)
+    DEFINE_STANDARD_RTTIEXT(Sketcher_Snap, Standard_Transient)
 
 protected:
 	/**

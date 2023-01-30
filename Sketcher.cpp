@@ -227,18 +227,18 @@ Sketcher_ObjectTypeOfMethod Sketcher::GetStatus()
 }
 
 /**
-* \fn OnMouseInputEvent(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+* \fn OnMouseInputEvent(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 * \brief input event handler
 * \return void
-* \param v3dX const V3d_Coordinate&
-* \param v3dY const V3d_Coordinate&
-* \param v3dZ const V3d_Coordinate&
-* \param projVx const Quantity_Parameter&
-* \param projVy const Quantity_Parameter&
-* \param projVz const Quantity_Parameter&
+* \param v3dX const Standard_Real&
+* \param v3dY const Standard_Real&
+* \param v3dZ const Standard_Real&
+* \param projVx const Standard_Real&
+* \param projVy const Standard_Real&
+* \param projVz const Standard_Real&
 */
-void Sketcher::OnMouseInputEvent(const V3d_Coordinate &v3dX, const V3d_Coordinate &v3dY, const V3d_Coordinate &v3dZ,
-	const Quantity_Parameter& projVx, const Quantity_Parameter& projVy, const Quantity_Parameter& projVz)
+void Sketcher::OnMouseInputEvent(const Standard_Real &v3dX, const Standard_Real &v3dY, const Standard_Real &v3dZ,
+    const Standard_Real& projVx, const Standard_Real& projVy, const Standard_Real& projVz)
 {
 	if (ProjectPointOnPlane(v3dX, v3dY, v3dZ, projVx, projVy, projVz))
 	{
@@ -266,18 +266,18 @@ void Sketcher::OnMouseInputEvent(Standard_Integer theX, Standard_Integer theY)
 }
 
 /**
-* \fn OnMouseMoveEvent(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+* \fn OnMouseMoveEvent(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 * \brief mouse move handler
 * \return void
-* \param v3dX const V3d_Coordinate&
-* \param v3dY const V3d_Coordinate&
-* \param v3dZ const V3d_Coordinate&
-* \param projVx const Quantity_Parameter&
-* \param projVy const Quantity_Parameter&
-* \param projVz const Quantity_Parameter&
+* \param v3dX const Standard_Real&
+* \param v3dY const Standard_Real&
+* \param v3dZ const Standard_Real&
+* \param projVx const Standard_Real&
+* \param projVy const Standard_Real&
+* \param projVz const Standard_Real&
 */
-void Sketcher::OnMouseMoveEvent(const V3d_Coordinate &v3dX, const V3d_Coordinate &v3dY, const V3d_Coordinate &v3dZ,
-	const Quantity_Parameter& projVx, const Quantity_Parameter& projVy, const Quantity_Parameter& projVz)
+void Sketcher::OnMouseMoveEvent(const Standard_Real &v3dX, const Standard_Real &v3dY, const Standard_Real &v3dZ,
+    const Standard_Real& projVx, const Standard_Real& projVy, const Standard_Real& projVz)
 {
 	if (ProjectPointOnPlane(v3dX, v3dY, v3dZ, projVx, projVy, projVz))
 	{
@@ -349,7 +349,7 @@ void Sketcher::ViewProperties()
 		myCurObject = Handle(Sketcher_Object)::DownCast(myData->Value(i));
 		if (myContext->IsSelected(myCurObject->GetAIS_Object()))
 		{
-			myContext->ClearSelected();
+            myContext->ClearSelected(1);
 			myGUI->SetSketcher_Object(myCurObject);
 			break;
 		}
@@ -366,7 +366,7 @@ void Sketcher::RedrawAll()
 	for (Standard_Integer i = 1; i <= myData->Length(); i++)
 	{
 		myCurObject = Handle(Sketcher_Object)::DownCast(myData->Value(i));
-		myContext->Display(myCurObject->GetAIS_Object());
+        myContext->Display(myCurObject->GetAIS_Object(),1);
 	}
 }
 
@@ -408,18 +408,18 @@ Sketcher_SnapType Sketcher::GetSnap()
 }
 
 /**
-* \fn ProjectPointOnPlane(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+* \fn ProjectPointOnPlane(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 * \brief calculate 2d point on current plane
 * \return Standard_Boolean
-* \param v3dX const V3d_Coordinate&
-* \param v3dY const V3d_Coordinate&
-* \param v3dZ const V3d_Coordinate&
-* \param projVx const Quantity_Parameter&
-* \param projVy const Quantity_Parameter&
-* \param projVz const Quantity_Parameter&
+* \param v3dX const Standard_Real&
+* \param v3dY const Standard_Real&
+* \param v3dZ const Standard_Real&
+* \param projVx const Standard_Real&
+* \param projVy const Standard_Real&
+* \param projVz const Standard_Real&
 */
-Standard_Boolean Sketcher::ProjectPointOnPlane(const V3d_Coordinate &v3dX, const V3d_Coordinate &v3dY, const V3d_Coordinate &v3dZ,
-	const Quantity_Parameter& projVx, const Quantity_Parameter& projVy, const Quantity_Parameter& projVz)
+Standard_Boolean Sketcher::ProjectPointOnPlane(const Standard_Real &v3dX, const Standard_Real &v3dY, const Standard_Real &v3dZ,
+    const Standard_Real& projVx, const Standard_Real& projVy, const Standard_Real& projVz)
 {
 	myTempPnt.SetCoord(v3dX, v3dY, v3dZ);
 	myCurrentDir.SetCoord(projVx, projVy, projVz);

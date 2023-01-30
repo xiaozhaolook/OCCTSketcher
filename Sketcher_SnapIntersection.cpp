@@ -177,6 +177,6 @@ Sketcher_SnapType Sketcher_SnapIntersection::GetSnapType()
 */
 void Sketcher_SnapIntersection::DrawRelation()
 {
-	myContext->SetSelected(curHilightedObj);
-	myContext->SetSelected(curHilightedObj2);
+    myContext->SetSelected(curHilightedObj,1);
+    myContext->SetSelected(curHilightedObj2,1);
 }

@@ -2,7 +2,8 @@
 #define SKETCHER_ANALYSERSNAP_H SKETCHER_ANALYSERSNAP_H
 
 #include <Standard_Macro.hxx>
-#include <MMgt_TShared.hxx>
+//#include <Standard_Transient.hxx>
+#include <Standard_Transient.hxx>
 #include <Standard_DefineHandle.hxx>
 
 #include "Sketcher_Object.h"
@@ -27,10 +28,10 @@
 #include <gp_Ax3.hxx>
 
 class Sketcher_AnalyserSnap;
-DEFINE_STANDARD_HANDLE(Sketcher_AnalyserSnap, MMgt_TShared)
+DEFINE_STANDARD_HANDLE(Sketcher_AnalyserSnap, Standard_Transient)
 
 //Snap Manager class 
-class Sketcher_AnalyserSnap : public MMgt_TShared
+class Sketcher_AnalyserSnap : public Standard_Transient
 {
 public:
 
@@ -142,7 +143,7 @@ public:
 	gp_Pnt2d MouseMoveException(const gp_Pnt2d& p1, const gp_Pnt2d& thePnt2d, TangentType CType, Standard_Boolean TangentOnly);
 
 	// Type management
-	DEFINE_STANDARD_RTTIEXT(Sketcher_AnalyserSnap, MMgt_TShared)
+    DEFINE_STANDARD_RTTIEXT(Sketcher_AnalyserSnap, Standard_Transient)
 
 private:
 	//methods

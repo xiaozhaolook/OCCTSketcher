@@ -68,7 +68,7 @@ Standard_Boolean Sketcher_CommandCircle3Tan::MouseInputEvent(const gp_Pnt2d& the
 			myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), tempPnt2d));
 
 			myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-			myContext->Display(myRubberLine, 0, -1);
+            myContext->Display(myRubberLine, 0, -1,1);
 
 			myCircle3TanAction = Input_2CircleTan;
 		}
@@ -86,8 +86,8 @@ Standard_Boolean Sketcher_CommandCircle3Tan::MouseInputEvent(const gp_Pnt2d& the
 			tempGeom_Circle->SetRadius(SKETCHER_RADIUS);
 			myRubberCircle->SetCircle(tempGeom_Circle);
 
-			myContext->Display(myRubberCircle, 0, -1);
-			myContext->Redisplay(myRubberCircle);
+            myContext->Display(myRubberCircle, 0, -1,1);
+            myContext->Redisplay(myRubberCircle,1);
 
 			myCircle3TanAction = Input_3CircleTan;
 		}
@@ -129,9 +129,9 @@ Standard_Boolean Sketcher_CommandCircle3Tan::MouseInputEvent(const gp_Pnt2d& the
 					Handle(AIS_Circle) myAIS_Circle = new AIS_Circle(Geom_Circle1);
 					AddObject(myGeom2d_Circle, myAIS_Circle, CircleSketcherObject);
 
-					myContext->Remove(myRubberLine);
-					myContext->Remove(myRubberCircle);
-					myContext->Display(myAIS_Circle);
+                    myContext->Remove(myRubberLine,1);
+                    myContext->Remove(myRubberCircle,1);
+                    myContext->Display(myAIS_Circle,1);
 
 					gp_lin1Exist = gp_lin2Exist = Standard_False;
 					gp_circ1Exist = gp_circ2Exist = Standard_False;
@@ -169,7 +169,7 @@ void Sketcher_CommandCircle3Tan::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 		{
 			mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), tempPnt2d));
 			myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-			myContext->Redisplay(myRubberLine);
+            myContext->Redisplay(myRubberLine,1);
 		}
 		break;
 	case Input_3CircleTan:
@@ -203,19 +203,19 @@ void Sketcher_CommandCircle3Tan::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 					}
 					tempGeom_Circle->SetCirc(best_Circ);
 					myRubberCircle->SetCircle(tempGeom_Circle);
-					myContext->Redisplay(myRubberCircle);
+                    myContext->Redisplay(myRubberCircle,1);
 				}
 			}
 			else
 			{
 				tempGeom_Circle->SetRadius(0);
-				myContext->Redisplay(myRubberCircle);
+                myContext->Redisplay(myRubberCircle,1);
 			}
 		}
 		else
 		{
 			tempGeom_Circle->SetRadius(SKETCHER_RADIUS);
-			myContext->Redisplay(myRubberCircle);
+            myContext->Redisplay(myRubberCircle,1);
 		}
 		break;
 	default:break;
@@ -236,10 +236,10 @@ void Sketcher_CommandCircle3Tan::CancelEvent()
 
 	case Input_1CircleTan:	break;
 
-	case Input_2CircleTan: 	myContext->Remove(myRubberLine);
+    case Input_2CircleTan: 	myContext->Remove(myRubberLine,1);
 		break;
-	case Input_3CircleTan: 	myContext->Remove(myRubberLine);
-		myContext->Remove(myRubberCircle);
+    case Input_3CircleTan: 	myContext->Remove(myRubberLine,1);
+        myContext->Remove(myRubberCircle,1);
 		break;
 	default: break;
 	}

@@ -13,7 +13,7 @@
 #include <Geom_Plane.hxx>
 #include <Geom2d_CartesianPoint.hxx>
 
-#include <V3d_Coordinate.hxx>
+//#include <Standard_Real.hxx>
 #include <V3d_Viewer.hxx>
 #include <V3d_View.hxx>
 
@@ -152,54 +152,54 @@ public:
 	Sketcher_ObjectTypeOfMethod GetStatus();
 
 	/**
-	* \fn OnMouseInputEvent(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+    * \fn OnMouseInputEvent(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 	* \brief input event handler
 	* \return void
-	* \param v3dX const V3d_Coordinate&
-	* \param v3dY const V3d_Coordinate&
-	* \param v3dZ const V3d_Coordinate&
-	* \param projVx const Quantity_Parameter&
-	* \param projVy const Quantity_Parameter&
-	* \param projVz const Quantity_Parameter&
+    * \param v3dX const Standard_Real&
+    * \param v3dY const Standard_Real&
+    * \param v3dZ const Standard_Real&
+    * \param projVx const Standard_Real&
+    * \param projVy const Standard_Real&
+    * \param projVz const Standard_Real&
 	*/
-	void OnMouseInputEvent(const V3d_Coordinate &v3dX, const V3d_Coordinate &v3dY, const V3d_Coordinate &v3dZ, const Quantity_Parameter& projVx, const Quantity_Parameter& projVy, const Quantity_Parameter& projVz);
+    void OnMouseInputEvent(const Standard_Real &v3dX, const Standard_Real &v3dY, const Standard_Real &v3dZ, const Standard_Real& projVx, const Standard_Real& projVy, const Standard_Real& projVz);
 
 	/**
-	* \fn OnMouseInputEvent(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+    * \fn OnMouseInputEvent(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 	* \brief input event handler
 	* \return void
-	* \param v3dX const V3d_Coordinate&
-	* \param v3dY const V3d_Coordinate&
-	* \param v3dZ const V3d_Coordinate&
-	* \param projVx const Quantity_Parameter&
-	* \param projVy const Quantity_Parameter&
-	* \param projVz const Quantity_Parameter&
+    * \param v3dX const Standard_Real&
+    * \param v3dY const Standard_Real&
+    * \param v3dZ const Standard_Real&
+    * \param projVx const Standard_Real&
+    * \param projVy const Standard_Real&
+    * \param projVz const Standard_Real&
 	*/
 	void OnMouseInputEvent(Standard_Integer theX, Standard_Integer theY);
 
 	/**
-	* \fn OnMouseMoveEvent(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+    * \fn OnMouseMoveEvent(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 	* \brief mouse move handler
 	* \return void
-	* \param v3dX const V3d_Coordinate&
-	* \param v3dY const V3d_Coordinate&
-	* \param v3dZ const V3d_Coordinate&
-	* \param projVx const Quantity_Parameter&
-	* \param projVy const Quantity_Parameter&
-	* \param projVz const Quantity_Parameter&
+    * \param v3dX const Standard_Real&
+    * \param v3dY const Standard_Real&
+    * \param v3dZ const Standard_Real&
+    * \param projVx const Standard_Real&
+    * \param projVy const Standard_Real&
+    * \param projVz const Standard_Real&
 	*/
-	void OnMouseMoveEvent(const V3d_Coordinate &v3dX, const V3d_Coordinate &v3dY, const V3d_Coordinate &v3dZ, const Quantity_Parameter& projVx, const Quantity_Parameter& projVy, const Quantity_Parameter& projVz);
+    void OnMouseMoveEvent(const Standard_Real &v3dX, const Standard_Real &v3dY, const Standard_Real &v3dZ, const Standard_Real& projVx, const Standard_Real& projVy, const Standard_Real& projVz);
 
 	/**
-	* \fn OnMouseMoveEvent(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+    * \fn OnMouseMoveEvent(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 	* \brief mouse move handler
 	* \return void
-	* \param v3dX const V3d_Coordinate&
-	* \param v3dY const V3d_Coordinate&
-	* \param v3dZ const V3d_Coordinate&
-	* \param projVx const Quantity_Parameter&
-	* \param projVy const Quantity_Parameter&
-	* \param projVz const Quantity_Parameter&
+    * \param v3dX const Standard_Real&
+    * \param v3dY const Standard_Real&
+    * \param v3dZ const Standard_Real&
+    * \param projVx const Standard_Real&
+    * \param projVy const Standard_Real&
+    * \param projVz const Standard_Real&
 	*/
 	void OnMouseMoveEvent(Standard_Integer theX, Standard_Integer theY);
 
@@ -257,17 +257,17 @@ public:
 
 private:
 	/**
-	* \fn ProjectPointOnPlane(const V3d_Coordinate &v3dX,const V3d_Coordinate &v3dY,const V3d_Coordinate &v3dZ,const Quantity_Parameter& projVx,const Quantity_Parameter& projVy,const Quantity_Parameter& projVz)
+    * \fn ProjectPointOnPlane(const Standard_Real &v3dX,const Standard_Real &v3dY,const Standard_Real &v3dZ,const Standard_Real& projVx,const Standard_Real& projVy,const Standard_Real& projVz)
 	* \brief calculate 2d point on current plane
 	* \return Standard_Boolean
-	* \param v3dX const V3d_Coordinate&
-	* \param v3dY const V3d_Coordinate&
-	* \param v3dZ const V3d_Coordinate&
-	* \param projVx const Quantity_Parameter&
-	* \param projVy const Quantity_Parameter&
-	* \param projVz const Quantity_Parameter&
+    * \param v3dX const Standard_Real&
+    * \param v3dY const Standard_Real&
+    * \param v3dZ const Standard_Real&
+    * \param projVx const Standard_Real&
+    * \param projVy const Standard_Real&
+    * \param projVz const Standard_Real&
 	*/
-	Standard_Boolean ProjectPointOnPlane(const V3d_Coordinate &v3dX, const V3d_Coordinate &v3dY, const V3d_Coordinate &v3dZ, const Quantity_Parameter& projVx, const Quantity_Parameter& projVy, const Quantity_Parameter& projVz);
+    Standard_Boolean ProjectPointOnPlane(const Standard_Real &v3dX, const Standard_Real &v3dY, const Standard_Real &v3dZ, const Standard_Real& projVx, const Standard_Real& projVy, const Standard_Real& projVz);
 
 	/**
 	* \fn addCommand(Handle(Sketcher_Command) theCommand)

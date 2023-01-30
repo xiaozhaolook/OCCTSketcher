@@ -60,10 +60,10 @@ Standard_Boolean Sketcher_CommandCircleCenterRadius::MouseInputEvent(const gp_Pn
 		tempGeom_Circle->SetLocation(myFirstPoint->Pnt());
 		tempGeom_Circle->SetRadius(SKETCHER_RADIUS);
 		myRubberCircle->SetCircle(tempGeom_Circle);
-		myContext->Display(myRubberCircle, 0, -1);
+        myContext->Display(myRubberCircle, 0, -1,1);
 
 		myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-		myContext->Display(myRubberLine, 0, -1);
+        myContext->Display(myRubberLine, 0, -1,1);
 
 		myCircleCenterRadiusAction = Input_RadiusPoint;
 		break;
@@ -78,9 +78,9 @@ Standard_Boolean Sketcher_CommandCircleCenterRadius::MouseInputEvent(const gp_Pn
 		Handle(AIS_Circle) myAIS_Circle = new AIS_Circle(Geom_Circle1);
 		AddObject(myGeom2d_Circle, myAIS_Circle, CircleSketcherObject);
 
-		myContext->Remove(myRubberCircle);
-		myContext->Remove(myRubberLine);
-		myContext->Display(myAIS_Circle);
+        myContext->Remove(myRubberCircle,1);
+        myContext->Remove(myRubberLine,1);
+        myContext->Display(myAIS_Circle,1);
 
 		myCircleCenterRadiusAction = Input_CenterPoint;
 	}
@@ -112,11 +112,11 @@ void Sketcher_CommandCircleCenterRadius::MouseMoveEvent(const gp_Pnt2d& thePnt2d
 		radius = myFirstgp_Pnt2d.Distance(curPnt2d);
 		tempGeom_Circle->SetRadius(radius);
 		//			myRubberCircle->SetCircle (tempGeom_Circle);
-		myContext->Redisplay(myRubberCircle);
+        myContext->Redisplay(myRubberCircle,1);
 
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-		myContext->Redisplay(myRubberLine);
+        myContext->Redisplay(myRubberLine,1);
 		break;
 	default:break;
 	}
@@ -136,8 +136,8 @@ void Sketcher_CommandCircleCenterRadius::CancelEvent()
 
 	case Input_CenterPoint: break;
 
-	case Input_RadiusPoint:	myContext->Remove(myRubberCircle);
-		myContext->Remove(myRubberLine);////////////////////////
+    case Input_RadiusPoint:	myContext->Remove(myRubberCircle,1);
+        myContext->Remove(myRubberLine,1);////////////////////////
 		break;
 	default: break;
 	}

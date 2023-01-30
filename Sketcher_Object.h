@@ -5,7 +5,8 @@
 #include <Standard_Macro.hxx>
 #endif
 
-#include <MMgt_TShared.hxx>
+//#include <Standard_Transient.hxx>
+#include <Standard_Transient.hxx>
 #include <Standard_DefineHandle.hxx>
 
 #include <Geom2d_Geometry.hxx>
@@ -23,9 +24,9 @@ class AIS_InteractiveObject;
 class Geom2d_Geometry;
 
 class Sketcher_Object;
-DEFINE_STANDARD_HANDLE(Sketcher_Object, MMgt_TShared)
+DEFINE_STANDARD_HANDLE(Sketcher_Object, Standard_Transient)
 
-class Sketcher_Object : public MMgt_TShared{
+class Sketcher_Object : public Standard_Transient{
 public:
 
 	/**
@@ -180,7 +181,7 @@ public:
 	*/
 	Standard_Real GetWidth();
 
-	DEFINE_STANDARD_RTTIEXT(Sketcher_Object, MMgt_TShared)
+    DEFINE_STANDARD_RTTIEXT(Sketcher_Object, Standard_Transient)
 
 private:
 

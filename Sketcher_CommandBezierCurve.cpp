@@ -67,10 +67,10 @@ Standard_Boolean Sketcher_CommandBezierCurve::MouseInputEvent(const gp_Pnt2d& th
 
 		Handle(Geom2d_CartesianPoint) myGeom2d_Point = new Geom2d_CartesianPoint(curPnt2d);
 		Handle(AIS_Point) myAIS_Point = new AIS_Point(myFirstPoint);
-		myContext->Display(myAIS_Point);
+        myContext->Display(myAIS_Point,1);
 		AddObject(myGeom2d_Point, myAIS_Point, PointSketcherObject);
 
-		myContext->Display(myRubberLine, 0, -1);
+        myContext->Display(myRubberLine, 0, -1,1);
 		myBezierCurveAction = Input_2Point;
 		IndexCounter = 2;
 	}
@@ -92,8 +92,8 @@ Standard_Boolean Sketcher_CommandBezierCurve::MouseInputEvent(const gp_Pnt2d& th
 			storePoles();
 			curEdge = ME.Edge();
 			myRubberAIS_Shape->Set(curEdge);
-			myContext->Remove(myRubberLine);
-			myContext->Display(myRubberAIS_Shape, 0, -1);
+            myContext->Remove(myRubberLine,1);
+            myContext->Display(myRubberAIS_Shape, 0, -1,1);
 
 			myGeom2d_BezierCurve->InsertPoleAfter(IndexCounter, curPnt2d);
 			myGeom_BezierCurve->InsertPoleAfter(IndexCounter, tempPnt);
@@ -118,7 +118,7 @@ Standard_Boolean Sketcher_CommandBezierCurve::MouseInputEvent(const gp_Pnt2d& th
 			else
 			{
 				myRubberAIS_Shape->Set(curEdge);
-				myContext->Redisplay(myRubberAIS_Shape);
+                myContext->Redisplay(myRubberAIS_Shape,1);
 
 				myGeom2d_BezierCurve->InsertPoleAfter(IndexCounter, curPnt2d);
 				myGeom_BezierCurve->InsertPoleAfter(IndexCounter, tempPnt);
@@ -151,7 +151,7 @@ void Sketcher_CommandBezierCurve::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 	case Input_2Point:
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-		myContext->Redisplay(myRubberLine);
+        myContext->Redisplay(myRubberLine,1);
 		break;
 
 	case Input_OtherPoints:
@@ -165,7 +165,7 @@ void Sketcher_CommandBezierCurve::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 		{
 			curEdge = ME.Edge();
 			myRubberAIS_Shape->Set(curEdge);
-			myContext->Redisplay(myRubberAIS_Shape);
+            myContext->Redisplay(myRubberAIS_Shape,1);
 		}
 		else
 			IndexCounter--;
@@ -187,7 +187,7 @@ void Sketcher_CommandBezierCurve::CancelEvent()
 	case Nothing:		break;
 	case Input_1Point:	break;
 	case Input_2Point:
-		myContext->Remove(myRubberLine);
+        myContext->Remove(myRubberLine,1);
 		break;
 	case Input_OtherPoints:
 	{
@@ -224,11 +224,11 @@ Sketcher_ObjectTypeOfMethod Sketcher_CommandBezierCurve::GetTypeOfMethod()
 */
 void Sketcher_CommandBezierCurve::closeBezierCurve()
 {
-	myContext->Remove(myRubberAIS_Shape);
+    myContext->Remove(myRubberAIS_Shape,1);
 	Handle(AIS_Shape) myAIS_Shape = new AIS_Shape(curEdge);
 	AddObject(myGeom2d_BezierCurve, myAIS_Shape, CurveSketcherObject);
 
-	myContext->Display(myAIS_Shape);
+    myContext->Display(myAIS_Shape,1);
 
 	for (Standard_Integer i = IndexCounter; i>2; i--)
 	{
@@ -250,7 +250,7 @@ void Sketcher_CommandBezierCurve::storePoles()
 
 	mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 	Handle(AIS_Point) myAIS_Point = new AIS_Point(mySecondPoint);
-	myContext->Display(myAIS_Point);
+    myContext->Display(myAIS_Point,1);
 
 	AddObject(myGeom2d_Point, myAIS_Point, PointSketcherObject);
 }

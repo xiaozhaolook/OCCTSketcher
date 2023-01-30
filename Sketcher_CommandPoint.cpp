@@ -49,7 +49,7 @@ Standard_Boolean Sketcher_CommandPoint::MouseInputEvent(const gp_Pnt2d& thePnt2d
 
 		Handle(Geom_CartesianPoint) myGeom_Point = new Geom_CartesianPoint(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		Handle(AIS_Point) myAIS_Point = new AIS_Point(myGeom_Point);
-		myContext->Display(myAIS_Point);
+        myContext->Display(myAIS_Point,1);
 
 		AddObject(myGeom2d_Point, myAIS_Point, PointSketcherObject);
 	}

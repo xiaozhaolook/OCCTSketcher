@@ -58,7 +58,7 @@ Standard_Boolean Sketcher_CommandCircle3P::MouseInputEvent(const gp_Pnt2d& thePn
 		myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 
 		myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-		myContext->Display(myRubberLine, 0, -1);
+        myContext->Display(myRubberLine, 0, -1,1);
 
 		myCircle3PAction = Input_2CirclePoint;
 		break;
@@ -73,9 +73,9 @@ Standard_Boolean Sketcher_CommandCircle3P::MouseInputEvent(const gp_Pnt2d& thePn
 		tempGeom_Circle->SetCirc(tempCirc);
 		myRubberCircle->SetCircle(tempGeom_Circle);
 
-		myContext->Remove(myRubberLine);
-		myContext->Display(myRubberCircle, 0, -1);
-		myContext->Redisplay(myRubberCircle);
+        myContext->Remove(myRubberLine,1);
+        myContext->Display(myRubberCircle, 0, -1,1);
+        myContext->Redisplay(myRubberCircle,1);
 
 		myCircle3PAction = Input_3CirclePoint;
 	}
@@ -91,8 +91,8 @@ Standard_Boolean Sketcher_CommandCircle3P::MouseInputEvent(const gp_Pnt2d& thePn
 			Handle(AIS_Circle) myAIS_Circle = new AIS_Circle(Geom_Circle1);
 			AddObject(myGeom2d_Circle, myAIS_Circle, CircleSketcherObject);
 
-			myContext->Remove(myRubberCircle);
-			myContext->Display(myAIS_Circle);
+            myContext->Remove(myRubberCircle,1);
+            myContext->Display(myAIS_Circle,1);
 			myCircle3PAction = Input_1CirclePoint;
 		}
 	}
@@ -122,7 +122,7 @@ void Sketcher_CommandCircle3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 	case Input_2CirclePoint:
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-		myContext->Redisplay(myRubberLine);
+        myContext->Redisplay(myRubberLine,1);
 		break;
 	case Input_3CirclePoint:
 	{
@@ -132,7 +132,7 @@ void Sketcher_CommandCircle3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 		{
 			tempGeom_Circle->SetCirc(tempMakeCirc.Value());
 			//				myRubberCircle->SetCircle(tempGeom_Circle);
-			myContext->Redisplay(myRubberCircle);
+            myContext->Redisplay(myRubberCircle,1);
 		}
 	}
 	break;
@@ -154,9 +154,9 @@ void Sketcher_CommandCircle3P::CancelEvent()
 
 	case Input_1CirclePoint: break;
 
-	case Input_2CirclePoint: myContext->Remove(myRubberLine);
+    case Input_2CirclePoint: myContext->Remove(myRubberLine,1);
 		break;
-	case Input_3CirclePoint: myContext->Remove(myRubberCircle);
+    case Input_3CirclePoint: myContext->Remove(myRubberCircle,1);
 		break;
 	default: break;
 	}

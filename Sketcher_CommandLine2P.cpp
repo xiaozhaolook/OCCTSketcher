@@ -48,7 +48,7 @@ Standard_Boolean Sketcher_CommandLine2P::MouseInputEvent(const gp_Pnt2d& thePnt2
 		myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
 
-		myContext->Display(myRubberLine, 0, -1);
+        myContext->Display(myRubberLine, 0, -1,1);
 		myLine2PAction = Input_SecondPointLine;
 		break;
 
@@ -64,17 +64,17 @@ Standard_Boolean Sketcher_CommandLine2P::MouseInputEvent(const gp_Pnt2d& thePnt2
 			Handle(AIS_Line) myAIS_Line = new AIS_Line(Geom_Point1, Geom_Point2);
 			AddObject(newGeom2d_Edge, myAIS_Line, LineSketcherObject);
 
-			myContext->Display(myAIS_Line);
+            myContext->Display(myAIS_Line,1);
 			if (myPolylineMode)
 			{
 				myFirstgp_Pnt2d = curPnt2d;
 				myFirstPoint->SetPnt(mySecondPoint->Pnt());
 				myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-				myContext->Redisplay(myRubberLine);
+                myContext->Redisplay(myRubberLine,1);
 			}
 			else
 			{
-				myContext->Remove(myRubberLine);
+                myContext->Remove(myRubberLine,1);
 				myLine2PAction = Input_FirstPointLine;
 			}
 		}
@@ -105,7 +105,7 @@ void Sketcher_CommandLine2P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 		curPnt2d = myAnalyserSnap->MouseMoveException(myFirstgp_Pnt2d, thePnt2d, Line_SecondPnt, Standard_False);
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-		myContext->Redisplay(myRubberLine);
+        myContext->Redisplay(myRubberLine,1);
 		break;
 	default:break;
 	}
@@ -125,7 +125,7 @@ void Sketcher_CommandLine2P::CancelEvent()
 
 	case Input_FirstPointLine: 	break;
 
-	case Input_SecondPointLine:	myContext->Remove(myRubberLine);
+    case Input_SecondPointLine:	myContext->Remove(myRubberLine,1);
 		break;
 	default: break;
 	}
@@ -154,7 +154,7 @@ void  Sketcher_CommandLine2P::SetPolylineFirstPnt(const gp_Pnt2d& p1)
 	myFirstgp_Pnt2d = p1;
 	myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), p1));
 	myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-	myContext->Display(myRubberLine, 0, -1);
+    myContext->Display(myRubberLine, 0, -1,1);
 	myLine2PAction = Input_SecondPointLine;
 }
 

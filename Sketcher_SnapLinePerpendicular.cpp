@@ -95,8 +95,8 @@ void Sketcher_SnapLinePerpendicular::DrawRelation()
 {
 	myPerRelation->SetFirstShape(FirstEdge);
 	myPerRelation->SetSecondShape(SecondEdge);
-	if (firstDisplay) myContext->Display(myPerRelation, 0, -1);
-	else myContext->Redisplay(myPerRelation);
+    if (firstDisplay) myContext->Display(myPerRelation, 0, -1,1);
+    else myContext->Redisplay(myPerRelation,1);
 }
 
 /**
@@ -106,5 +106,5 @@ void Sketcher_SnapLinePerpendicular::DrawRelation()
 */
 void Sketcher_SnapLinePerpendicular::EraseRelation()
 {
-	myContext->Remove(myPerRelation);
+    myContext->Remove(myPerRelation,1);
 }

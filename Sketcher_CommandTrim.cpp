@@ -415,7 +415,7 @@ Standard_Boolean Sketcher_CommandTrim::Redraw()
 	case RedrawTrimmedObject:
 		if (curTrimmedObj != newTrimmedObj)
 		{
-			myContext->Display(curTrimmedObj);
+            myContext->Display(curTrimmedObj,1);
 			curTrimmedObj = newTrimmedObj;
 			return Standard_True;
 		}
@@ -426,8 +426,8 @@ Standard_Boolean Sketcher_CommandTrim::Redraw()
 			curFirstObjParam_Start != newFirstObjParam_Start ||
 			curFirstObjParam_End != newFirstObjParam_End)
 		{
-			myContext->Display(curTrimmedObj);
-			myContext->Remove(FirstObj);
+            myContext->Display(curTrimmedObj,1);
+            myContext->Remove(FirstObj,1);
 			curTrimmedObj = newTrimmedObj;
 			curFirstObjParam_Start = newFirstObjParam_Start;
 			curFirstObjParam_End = newFirstObjParam_End;
@@ -442,9 +442,9 @@ Standard_Boolean Sketcher_CommandTrim::Redraw()
 			curSecondObjParam_Start != newSecondObjParam_Start ||
 			curSecondObjParam_End != newSecondObjParam_End)
 		{
-			myContext->Display(curTrimmedObj);
-			myContext->Remove(FirstObj);
-			myContext->Remove(SecondObj);
+            myContext->Display(curTrimmedObj,1);
+            myContext->Remove(FirstObj,1);
+            myContext->Remove(SecondObj,1);
 			curTrimmedObj = newTrimmedObj;
 			curFirstObjParam_Start = newFirstObjParam_Start;
 			curFirstObjParam_End = newFirstObjParam_End;
@@ -470,16 +470,16 @@ void Sketcher_CommandTrim::RedrawOld()
 	case NothingRedraw:
 		break;
 	case RedrawTrimmedObject:
-		myContext->Display(curTrimmedObj);
+        myContext->Display(curTrimmedObj,1);
 		break;
 	case OneObjectRemove:
-		myContext->Display(curTrimmedObj);
-		myContext->Remove(FirstObj);
+        myContext->Display(curTrimmedObj,1);
+        myContext->Remove(FirstObj,1);
 		break;
 	case TwoObjectRemove:
-		myContext->Display(curTrimmedObj);
-		myContext->Remove(FirstObj);
-		myContext->Remove(SecondObj);
+        myContext->Display(curTrimmedObj,1);
+        myContext->Remove(FirstObj,1);
+        myContext->Remove(SecondObj,1);
 		break;
 	default:break;
 	}
@@ -528,7 +528,7 @@ void Sketcher_CommandTrim::EditLine(Standard_Real u1, Standard_Real u2)
 		Handle(AIS_Line) myAIS_Line = new AIS_Line(Geom_Point1, Geom_Point2);
 		//myAIS_Line->SetAttributes(myDrawer);
 		myContext->Erase(curTrimmedObj, Standard_True);
-		myContext->Display(myAIS_Line);
+        myContext->Display(myAIS_Line,1);
 
 		FirstObj = myAIS_Line;
 		RedrawFlag = Standard_True;
@@ -569,7 +569,7 @@ void Sketcher_CommandTrim::AddNewLine(Standard_Real u1, Standard_Real u2)
 		Handle(AIS_Line) myAIS_Line = new AIS_Line(Geom_Point1, Geom_Point2);
 		//myAIS_Line->SetAttributes(myDrawer);
 
-		myContext->Display(myAIS_Line);
+        myContext->Display(myAIS_Line,1);
 		SecondObj = myAIS_Line;
 	}
 
@@ -609,7 +609,7 @@ void Sketcher_CommandTrim::EditCircle()
 		//myAIS_Circle->SetAttributes(myDrawer);
 
 		myContext->Erase(curTrimmedObj, Standard_True);
-		myContext->Display(myAIS_Circle);
+        myContext->Display(myAIS_Circle,1);
 
 		FirstObj = myAIS_Circle;
 	}
@@ -653,7 +653,7 @@ void Sketcher_CommandTrim::EditArc(Standard_Real u1, Standard_Real u2)
 		//myAIS_Circle->SetAttributes(myDrawer);
 
 		myContext->Erase(curTrimmedObj, Standard_True);
-		myContext->Display(myAIS_Circle);
+        myContext->Display(myAIS_Circle,1);
 
 		FirstObj = myAIS_Circle;
 		RedrawFlag = Standard_True;
@@ -698,7 +698,7 @@ void Sketcher_CommandTrim::AddNewArc(Standard_Real u1, Standard_Real u2)
 		myAIS_Circle->SetLastParam(tempGeom2d_Arc->LastParameter());
 		//myAIS_Circle->SetAttributes(myDrawer);
 
-		myContext->Display(myAIS_Circle);
+        myContext->Display(myAIS_Circle,1);
 		SecondObj = myAIS_Circle;
 	}
 

@@ -74,13 +74,13 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 		if (!myPolylineMode)
 		{
 			myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-			myContext->Display(myRubberLine, 0, -1);
+            myContext->Display(myRubberLine, 0, -1,1);
 			myArc3PAction = Input_2ArcPoint;
 		}
 		else
 		{
 			findlastSObject();
-			myContext->Display(myRubberCircle, 0, -1);
+            myContext->Display(myRubberCircle, 0, -1,1);
 		}
 		break;
 
@@ -108,9 +108,9 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 			myRubberCircle->SetLastParam(u2);
 		}
 
-		myContext->Remove(myRubberLine);
-		myContext->Display(myRubberCircle, 0, -1);
-		myContext->Redisplay(myRubberCircle);
+        myContext->Remove(myRubberLine,1);
+        myContext->Display(myRubberCircle, 0, -1,1);
+        myContext->Redisplay(myRubberCircle,1);
 
 		myArc3PAction = Input_3ArcPoint;
 	}
@@ -135,8 +135,8 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 
 			AddObject(myGeom2d_Arc, myAIS_Circle, ArcSketcherObject);
 
-			myContext->Remove(myRubberCircle);
-			myContext->Display(myAIS_Circle);
+            myContext->Remove(myRubberCircle,1);
+            myContext->Display(myAIS_Circle,1);
 
 			myArc3PAction = Input_1ArcPoint;
 		}
@@ -170,7 +170,7 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 			Handle(AIS_Circle) myAIS_Circle = new AIS_Circle(Geom_Circle1);
 			myAIS_Circle->SetFirstParam(myGeom2d_Arc->FirstParameter());
 			myAIS_Circle->SetLastParam(myGeom2d_Arc->LastParameter());
-			myContext->Display(myAIS_Circle);
+            myContext->Display(myAIS_Circle,1);
 
 			AddObject(myGeom2d_Arc, myAIS_Circle, ArcSketcherObject);
 
@@ -184,7 +184,7 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 
 			tempGeom_Circle->SetRadius(0);
 			myRubberCircle->SetCircle(tempGeom_Circle);
-			myContext->Redisplay(myRubberCircle);
+            myContext->Redisplay(myRubberCircle,1);
 		}
 	}
 
@@ -213,7 +213,7 @@ void Sketcher_CommandArc3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 	case Input_2ArcPoint:
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-		myContext->Redisplay(myRubberLine);
+        myContext->Redisplay(myRubberLine,1);
 		break;
 	case Input_3ArcPoint:
 	{
@@ -225,7 +225,7 @@ void Sketcher_CommandArc3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 			myRubberCircle->SetCircle(tempGeom_Circle);
 			myRubberCircle->SetFirstParam(ElCLib::Parameter(tempGeom_Circle->Circ(), myFirstPoint->Pnt()));
 			myRubberCircle->SetLastParam(ElCLib::Parameter(tempGeom_Circle->Circ(), third_Pnt));
-			myContext->Redisplay(myRubberCircle);
+            myContext->Redisplay(myRubberCircle,1);
 		}
 	}
 	break;
@@ -257,7 +257,7 @@ void Sketcher_CommandArc3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 				//					myRubberCircle->SetCircle(tempGeom_Circle);
 				myRubberCircle->SetFirstParam(ElCLib::Parameter(tempGeom_Circle->Circ(), myFirstPoint->Pnt()));
 				myRubberCircle->SetLastParam(ElCLib::Parameter(tempGeom_Circle->Circ(), third_Pnt));
-				myContext->Redisplay(myRubberCircle);
+                myContext->Redisplay(myRubberCircle,1);
 			}
 		}
 		break;
@@ -280,11 +280,11 @@ void Sketcher_CommandArc3P::CancelEvent()
 
 	case Input_1ArcPoint: break;
 
-	case Input_2ArcPoint:	myContext->Remove(myRubberLine);
+    case Input_2ArcPoint:	myContext->Remove(myRubberLine,1);
 		break;
-	case Input_3ArcPoint:	myContext->Remove(myRubberCircle);
+    case Input_3ArcPoint:	myContext->Remove(myRubberCircle,1);
 		break;
-	case Input_PolylineArc: myContext->Remove(myRubberCircle);
+    case Input_PolylineArc: myContext->Remove(myRubberCircle,1);
 		break;
 
 	default: break;
@@ -313,7 +313,7 @@ void  Sketcher_CommandArc3P::SetPolylineFirstPnt(const gp_Pnt2d& p1)
 	myFirstgp_Pnt2d = p1;
 	myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), p1));
 	findlastSObject();
-	myContext->Display(myRubberCircle, 0, -1);
+    myContext->Display(myRubberCircle, 0, -1,1);
 }
 
 
@@ -351,17 +351,17 @@ void Sketcher_CommandArc3P::SetPolylineMode(Standard_Boolean mode)
 	case Input_1ArcPoint:	break;
 
 	case Input_2ArcPoint:	findlastSObject();
-		myContext->Remove(myRubberLine);
-		myContext->Display(myRubberCircle, 0, -1);
+        myContext->Remove(myRubberLine,1);
+        myContext->Display(myRubberCircle, 0, -1,1);
 		break;
 	case Input_3ArcPoint:	findlastSObject();
-		myContext->Redisplay(myRubberCircle);
+        myContext->Redisplay(myRubberCircle,1);
 		break;
 	case Input_PolylineArc: mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
 
-		myContext->Remove(myRubberCircle);
-		myContext->Display(myRubberLine, 0, -1);
+        myContext->Remove(myRubberCircle,1);
+        myContext->Display(myRubberLine, 0, -1,1);
 		myArc3PAction = Input_2ArcPoint;
 		break;
 

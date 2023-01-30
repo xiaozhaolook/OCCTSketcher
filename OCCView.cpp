@@ -52,7 +52,7 @@ void OCCView::init(void){
 
 	Handle(WNT_Window) wind = new WNT_Window((Aspect_Handle)window_handle);
 
-	myViewer = new V3d_Viewer(GetGraphicDriver(), Standard_ExtString("viewer3d"));
+	myViewer = new V3d_Viewer(GetGraphicDriver()/*, Standard_ExtString("viewer3d")*/);
 
 	myView = myViewer->CreateView();
 	myView->SetBgGradientColors(Quantity_NOC_SKYBLUE, Quantity_NOC_GRAY, Aspect_GFM_VER);
@@ -456,7 +456,7 @@ void OCCView::updateToggled(bool isOn){
 }
 
 void OCCView::onErase(){
-	myContext->EraseAll();
+	myContext->EraseAll(1);
 }
 
 void OCCView::onDeleteSelected(){
@@ -782,7 +782,7 @@ void OCCView::dragEvent(const int x, const int y, const int TheState){
 	}
 
 	if (TheState == 0){
-		myContext->Select(theButtonDownX, theButtonDownY, x, y, myView);
+		myContext->Select(theButtonDownX, theButtonDownY, x, y, myView,1);
 		emit selectionChanged();
 	}
 }
@@ -818,7 +818,7 @@ void OCCView::multiDragEvent(const int x, const int y, const int TheState){
 	}
 	if (TheState == 0)
 	{
-		myContext->ShiftSelect(theButtonDownX, theButtonDownY, x, y, myView);
+		myContext->ShiftSelect(theButtonDownX, theButtonDownY, x, y, myView,1);
 		emit selectionChanged();
 	}
 }

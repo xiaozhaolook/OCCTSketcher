@@ -113,7 +113,7 @@ Sketcher_SnapType Sketcher_SnapTangent::GetSnapType()
 */
 void Sketcher_SnapTangent::EraseSnap()
 {
-	myContext->Remove(myAIS_Point);
+    myContext->Remove(myAIS_Point,1);
 	myTangentType = NothingTangent;
 	FixFirstPnt = Standard_False;
 }
