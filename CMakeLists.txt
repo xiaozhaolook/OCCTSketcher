@@ -37,8 +37,8 @@ find_package(OpenCASCADE CONFIG REQUIRED)
 include_directories(${OpenCASCADE_INCLUDE_DIR})
 
 FILE(GLOB PROJECT_SRC_FILES
-	"*.h"
-	"*.cpp"
+	"src/*.h"
+	"src/*.cpp"
 )
 
 SET(PROJECT_UI
@@ -50,7 +50,7 @@ SET( RESOURCE
 )
 
 FILE(GLOB PROJECT_MOC_HDRS  
-	"*.h"
+	"src/*.h"
 )  
 
 QT5_WRAP_UI( PROJECT_UIS_H  
