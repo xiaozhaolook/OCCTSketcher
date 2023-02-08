@@ -4,7 +4,7 @@
 enum Sketcher_SnapType
 {
 	SnapNothing,
-	SnapEnd,
+	SnapEnd, 
 	SnapMiddle,
 	SnapCenter,
 	SnapNearest,

@@ -8,6 +8,7 @@
 #include <QStyleFactory>
 #include <QCheckBox>
 #include <QApplication>
+#include <QCursor>
 
 #include <V3d_View.hxx>
 #include <Aspect_Handle.hxx>
@@ -148,7 +149,7 @@ protected:
 	virtual void onMButtonUp(const int theFlags, const QPoint thePoint);
 	virtual void onRButtonUp(const int theFlags, const QPoint thePoint);
 	virtual void onMouseMove(const int theFlags, const QPoint thePoint);
-
+    void DrawRectangle( const int MinX, const int MinY, const int MaxX, const int MaxY, const bool Draw );
 
 protected:
 	void init(void);
@@ -175,7 +176,7 @@ private:
     Standard_Real										myCurZoom;
 	Standard_Boolean									myDegenerateModeIsOn;
 	QList<QAction*>*									myViewActions;
-	QList<QAction *> *									myDrawActions;
+	QList<QAction*>*									myDrawActions;
 	//! rubber rectangle for the mouse selection.
 	QRubberBand*										myRectBand;
 	QMenu *												myMenu;

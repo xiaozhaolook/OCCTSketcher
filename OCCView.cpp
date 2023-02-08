@@ -6,12 +6,12 @@
 
 #define ValZWMin 1
 
-static QCursor* defCursor = NULL;
-static QCursor* handCursor = NULL;
-static QCursor* panCursor = NULL;
-static QCursor* globPanCursor = NULL;
-static QCursor* zoomCursor = NULL;
-static QCursor* rotCursor = NULL;
+static QCursor* defCursor = nullptr;
+static QCursor* handCursor = nullptr;
+static QCursor* panCursor = nullptr;
+static QCursor* globPanCursor = nullptr;
+static QCursor* zoomCursor = nullptr;
+static QCursor* rotCursor = nullptr;
 
 static Handle(Graphic3d_GraphicDriver)& GetGraphicDriver()
 {
@@ -20,16 +20,16 @@ static Handle(Graphic3d_GraphicDriver)& GetGraphicDriver()
 }
 
 OCCView::OCCView(QWidget *parent) : QGLWidget(parent),
-myXmin(0),
-myYmin(0),
-myXmax(0),
-myYmax(0),
-myCurrentMode(CurAction3d_DynamicRotation),
-myDegenerateModeIsOn(Standard_True),
-myRectBand(nullptr),
-myMenu(nullptr),
-myViewActions(nullptr),
-myDrawActions(nullptr){
+    myXmin(0),
+    myYmin(0),
+    myXmax(0),
+    myYmax(0),
+    myCurrentMode(CurAction3d_DynamicRotation),
+    myDegenerateModeIsOn(Standard_True),
+    myRectBand(nullptr),
+    myMenu(nullptr),
+    myViewActions(nullptr),
+    myDrawActions(nullptr){
 	setBackgroundRole(QPalette::NoRole);
 	setMouseTracking(true);
 	
@@ -73,6 +73,15 @@ void OCCView::init(void){
 	myView->TriedronDisplay(Aspect_TOTP_RIGHT_LOWER, Quantity_NOC_CHOCOLATE, 0.08, V3d_ZBUFFER);
 
 	myContext->SetDisplayMode(AIS_Shaded, Standard_True);
+
+    mySketcher->SetPolylineMode(Standard_True);
+	//mySketcher->SetType(AuxiliarySketcherType);
+
+	Standard_Real mywidth{2.0};
+	mySketcher->SetWidth(mywidth);
+	//mySketcher->SetWidth(200);//没变？
+
+	mySketcher->SetSnap(SnapMiddle); 
 }
 
 const Handle(AIS_InteractiveContext) & OCCView::getContext() const{
@@ -99,7 +108,7 @@ void OCCView::noActiveActions(){
 			(anAction == myViewActions->at(ViewRotationId))
 			)
 		{
-			setCursor(*defCursor);
+			setCursor(QCursor(Qt::ArrowCursor));
 			anAction->setCheckable(true);
 			anAction->setChecked(false);
 		}
@@ -118,7 +127,7 @@ void OCCView::noActiveActions(){
 			(anAction == myDrawActions->at(MyInputArcCenter2PAction)) ||
 			(anAction == myDrawActions->at(MyInputBezierCurveAction)) ||
 			(anAction == myDrawActions->at(MyTrimCurveAction))) {
-			setCursor(*defCursor);
+			setCursor(QCursor(Qt::ArrowCursor));
 			anAction->setCheckable(true);
 			anAction->setChecked(false);
 		}
@@ -408,15 +417,15 @@ void OCCView::updateToggled(bool isOn){
 			)
 		{
 			if (sentBy == myViewActions->at(ViewZoomId))
-				setCursor(*zoomCursor);
+				setCursor(QCursor(Qt::SizeBDiagCursor));//缩放
 			else if (sentBy == myViewActions->at(ViewPanId))
-				setCursor(*panCursor);
+				setCursor(QCursor(Qt::OpenHandCursor));//平移
 			else if (sentBy == myViewActions->at(ViewGlobalPanId))
-				setCursor(*globPanCursor);
+				setCursor(QCursor(Qt::OpenHandCursor));//平移
 			else if (sentBy == myViewActions->at(ViewRotationId))
-				setCursor(*rotCursor);
+				setCursor(QCursor(Qt::CrossCursor));//旋转
 			else
-				setCursor(*defCursor);
+				setCursor(QCursor(Qt::ArrowCursor));
 			sentBy->setCheckable(false);
 		}
 	}
@@ -472,7 +481,7 @@ void OCCView::onRedrawAll(){
 }
 
 void OCCView::onChangePlane(){
-	gp_Dir dir(2, 0, 1);
+	gp_Dir dir(3, 0, 1);
 
 	gp_Ax3 newgp_Ax3(gp::Origin(), dir);
 
@@ -485,6 +494,13 @@ void OCCView::onGrid(){
 	Handle(V3d_Viewer) aViewer = myView->Viewer();
 	if (GRIDCounter)
 	{
+        gp_Dir xDirection(1,0,0),yDirection(0,1,0),zDirection(0,0,1);
+        gp_Ax3 diyPlane;
+
+        diyPlane.SetDirection(yDirection);
+        aViewer->SetPrivilegedPlane(diyPlane);
+        mySketcher->SetCoordinateSystem(diyPlane);
+
 		aViewer->ActivateGrid(GRID1);
 		GRIDCounter = false;
 	}
@@ -505,6 +521,7 @@ void OCCView::onInputPoints(){
 
 void OCCView::onInputLines(){
 	mySketcher->ObjectAction(Line2P_Method);
+	//mySketcher->SetWidth(200);
 	myCurrentMode = SketcherAction;
 }
 
@@ -735,7 +752,7 @@ void OCCView::onMouseMove(const int theFlags, const QPoint thePoint){
 		dragEvent(thePoint.x(), thePoint.y(), 1);
 	}
 
-	// Ctrl for multi selection.
+	//// Ctrl for multi selection.
 	if (theFlags & Qt::ControlModifier){
 		multiMoveEvent(thePoint.x(), thePoint.y());
 	}
@@ -743,7 +760,7 @@ void OCCView::onMouseMove(const int theFlags, const QPoint thePoint){
 		moveEvent(thePoint.x(), thePoint.y());
 	}
 
-	// Middle button.
+	//// Middle button.
 	if (theFlags & Qt::MidButton){
 		switch (myCurrentMode){
 		case CurAction3d_DynamicRotation:
@@ -763,6 +780,18 @@ void OCCView::onMouseMove(const int theFlags, const QPoint thePoint){
 		default:
 			break;
 		}
+	}
+	if (!theFlags)
+	{
+		if (myCurrentMode == SketcherAction)
+		{
+			myXmax = thePoint.x();
+			myYmax = thePoint.y();
+			myView->Convert(myXmax, myYmax, my_v3dX, my_v3dY, my_v3dZ);
+			myView->Proj(projVx, projVy, projVz);
+			mySketcher->OnMouseMoveEvent(my_v3dX, my_v3dY, my_v3dZ, projVx, projVy, projVz);
+		}
+		//m_myContext->MoveTo(thePoint.x(), thePoint.y(), m_myView, Standard_True);
 	}
 }
 
@@ -871,23 +900,63 @@ void OCCView::activateCursor(const CurrentAction3d mode){
 	switch (mode)
 	{
 	case CurAction3d_DynamicPanning:
-		setCursor(*panCursor);
+		//setCursor(*panCursor);
+		setCursor(QCursor(Qt::OpenHandCursor));//平移
 		break;
 	case CurAction3d_DynamicZooming:
-		setCursor(*zoomCursor);
+		//setCursor(*zoomCursor);
+		setCursor(QCursor(Qt::SizeBDiagCursor));//缩放
 		break;
 	case CurAction3d_DynamicRotation:
-		setCursor(*rotCursor);
+		//setCursor(*rotCursor);
+		setCursor(QCursor(Qt::CrossCursor));//旋转
 		break;
 	case CurAction3d_GlobalPanning:
-		setCursor(*globPanCursor);
+		//setCursor(*globPanCursor);
+		setCursor(QCursor(Qt::OpenHandCursor));//平移
 		break;
 	case CurAction3d_WindowZooming:
-		setCursor(*handCursor);
+		//setCursor(*handCursor);
+		setCursor(QCursor(Qt::SizeBDiagCursor));//缩放
 		break;
 	case CurAction3d_Nothing:
 	default:
-		setCursor(*defCursor);
+		//setCursor(*defCursor);
+		setCursor(QCursor(Qt::ArrowCursor));
 		break;
 	}
 }
+
+void OCCView::DrawRectangle(const int MinX, const int MinY,
+                         const int MaxX, const int MaxY, const bool Draw)
+{
+    QPainter thePainter(this);
+//    thePainter.setRasterOp(Qt::XorROP); //改了
+    thePainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    thePainter.setPen(Qt::white);
+
+    static Standard_Integer StoredMinX, StoredMaxX, StoredMinY, StoredMaxY;
+    static Standard_Boolean m_IsVisible;
+
+    QRect aRect;
+    if ( m_IsVisible && !Draw) // move or up  : erase at the old position
+    {
+        aRect.setRect( StoredMinX, StoredMinY, abs(StoredMaxX-StoredMinX), abs(StoredMaxY-StoredMinY));
+        thePainter.drawRect(aRect);
+        m_IsVisible = false;
+    }
+    StoredMinX = (MinX < MaxX) ? MinX: MaxX ;
+    StoredMinY = (MinY < MaxY) ? MinY: MaxY ;
+    StoredMaxX = (MinX > MaxX) ? MinX: MaxX ;
+    StoredMaxY = (MinY > MaxY) ? MinY: MaxY ;
+
+    if (Draw) // move : draw
+    {
+        aRect.setRect( StoredMinX, StoredMinY, abs(StoredMaxX-StoredMinX), abs(StoredMaxY-StoredMinY));
+        thePainter.drawRect(aRect);
+        m_IsVisible = true;
+    }
+}
+
+
+

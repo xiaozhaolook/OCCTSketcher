@@ -48,7 +48,8 @@ Standard_Boolean Sketcher_CommandLine2P::MouseInputEvent(const gp_Pnt2d& thePnt2
 		myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
 
-        myContext->Display(myRubberLine, 0, -1,1);
+        myContext->Display(myRubberLine, 1, -1,1);
+//        myContext->Display(myRubberLine,1);
 		myLine2PAction = Input_SecondPointLine;
 		break;
 
@@ -154,8 +155,11 @@ void  Sketcher_CommandLine2P::SetPolylineFirstPnt(const gp_Pnt2d& p1)
 	myFirstgp_Pnt2d = p1;
 	myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), p1));
 	myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-    myContext->Display(myRubberLine, 0, -1,1);
+    std::cout<<"dis"<<std::endl;
+    myContext->Display(myRubberLine, 1, -1,1);
+//    myContext->Display(myRubberLine, 1);
 	myLine2PAction = Input_SecondPointLine;
+
 }
 
 

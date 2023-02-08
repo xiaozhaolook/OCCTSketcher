@@ -13,7 +13,7 @@ curCoordinateSystem(gp::XOY())
 	myColor = Quantity_NOC_YELLOW;
 	myType = MainSketcherType;
 	myStyle = Aspect_TOL_SOLID;
-	myWidth = 1.0;
+	myWidth = 30.0;
 	myPrs3dAspect = new Prs3d_LineAspect(myColor, myStyle, myWidth);
 	//myDrawer = new AIS_Drawer();
 
