@@ -7,10 +7,10 @@
 */
 Sketcher_QtGUI::Sketcher_QtGUI(QWidget* parent)
 {
-	//prop_arc = new Sketcher_PropertyArc(parent);
-	//prop_circle = new Sketcher_PropertyCircle(parent);
-	//prop_line = new Sketcher_PropertyLine(parent);
-	//prop_point = new Sketcher_PropertyPoint(parent);
+	prop_arc = new Sketcher_PropertyArc(parent, "Arc");
+	prop_circle = new Sketcher_PropertyCircle(parent, "Circle");
+	prop_line = new Sketcher_PropertyLine(parent, "Lines");
+	prop_point = new Sketcher_PropertyPoint(parent, "Points");
 }
 
 /**
@@ -30,10 +30,10 @@ Sketcher_QtGUI::~Sketcher_QtGUI()
 */
 void Sketcher_QtGUI::SetContext(Handle(AIS_InteractiveContext)& theContext)
 {
-	//prop_arc->SetContext(theContext);
-	//prop_circle->SetContext(theContext);
-	//prop_line->SetContext(theContext);
-	//prop_point->SetContext(theContext);
+	prop_arc->SetContext(theContext);
+	prop_circle->SetContext(theContext);
+	prop_line->SetContext(theContext);
+	prop_point->SetContext(theContext);
 }
 
 /**
@@ -44,10 +44,10 @@ void Sketcher_QtGUI::SetContext(Handle(AIS_InteractiveContext)& theContext)
 */
 void Sketcher_QtGUI::SetAx3(const gp_Ax3& theAx3)
 {
-	//prop_arc->SetAx3(theAx3);
-	//prop_circle->SetAx3(theAx3);
-	//prop_line->SetAx3(theAx3);
-	//prop_point->SetAx3(theAx3);
+	prop_arc->SetAx3(theAx3);
+	prop_circle->SetAx3(theAx3);
+	prop_line->SetAx3(theAx3);
+	prop_point->SetAx3(theAx3);
 }
 
 /**
@@ -58,25 +58,25 @@ void Sketcher_QtGUI::SetAx3(const gp_Ax3& theAx3)
 */
 void Sketcher_QtGUI::SetSketcher_Object(Handle(Sketcher_Object)& CurObject)
 {
-	//if (!prop_arc->isHidden())
-	//	prop_arc->close();
-	//if (!prop_circle->isHidden())
-	//	prop_circle->close();
-	//if (!prop_line->isHidden())
-	//	prop_line->close();
-	//if (!prop_point->isHidden())
-	//	prop_point->close();
+	if (!prop_arc->isHidden())
+		prop_arc->close();
+	if (!prop_circle->isHidden())
+		prop_circle->close();
+	if (!prop_line->isHidden())
+		prop_line->close();
+	if (!prop_point->isHidden())
+		prop_point->close();
 
-	//switch (CurObject->GetGeometryType())
-	//{
-	//case ArcSketcherObject: 	prop_arc->SetObject(CurObject);
-	//	break;
-	//case CircleSketcherObject:	prop_circle->SetObject(CurObject);
-	//	break;
-	//case LineSketcherObject:	prop_line->SetObject(CurObject);
-	//	break;
-	//case PointSketcherObject:	prop_point->SetObject(CurObject);
-	//	break;
-	//default:break;
-	//}
+	switch (CurObject->GetGeometryType())
+	{
+	case ArcSketcherObject: 	prop_arc->SetObject(CurObject);
+		break;
+	case CircleSketcherObject:	prop_circle->SetObject(CurObject);
+		break;
+	case LineSketcherObject:	prop_line->SetObject(CurObject);
+		break;
+	case PointSketcherObject:	prop_point->SetObject(CurObject);
+		break;
+	default:break;
+	}
 }

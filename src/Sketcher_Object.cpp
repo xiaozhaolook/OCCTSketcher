@@ -12,10 +12,10 @@ IMPLEMENT_STANDARD_RTTIEXT(Sketcher_Object, MMgt_TShared)
 * \param theTypeOfMethod const Sketcher_ObjectTypeOfMethod
 */
 Sketcher_Object::Sketcher_Object(const Handle(Geom2d_Geometry)& theGeom2d_Geometry,
-const Handle(AIS_InteractiveObject)& theAIS_InteractiveObject,
-const TCollection_ExtendedString& theName,
-const Sketcher_ObjectGeometryType theGeometryType,
-const Sketcher_ObjectTypeOfMethod theTypeOfMethod)
+								const Handle(AIS_InteractiveObject)& theAIS_InteractiveObject,
+								const TCollection_ExtendedString& theName,
+								const Sketcher_ObjectGeometryType theGeometryType,
+								const Sketcher_ObjectTypeOfMethod theTypeOfMethod)
 {
 	myGeometry = theGeom2d_Geometry;
 	myAIS_InteractiveObject = theAIS_InteractiveObject;

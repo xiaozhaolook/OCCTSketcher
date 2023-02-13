@@ -68,7 +68,7 @@ void OCCView::init(void){
 	myViewer->SetDefaultLights();
 	myViewer->SetLightOn();
 
-	myView->SetBackgroundColor(Quantity_NOC_BLACK);
+	myView->SetBackgroundColor(Quantity_NOC_GRAY60);
 	myView->MustBeResized();
 	myView->TriedronDisplay(Aspect_TOTP_RIGHT_LOWER, Quantity_NOC_CHOCOLATE, 0.08, V3d_ZBUFFER);
 
@@ -77,11 +77,9 @@ void OCCView::init(void){
     mySketcher->SetPolylineMode(Standard_True);
 	//mySketcher->SetType(AuxiliarySketcherType);
 
-	Standard_Real mywidth{2.0};
-	mySketcher->SetWidth(mywidth);
-	//mySketcher->SetWidth(200);//没变？
-
-	mySketcher->SetSnap(SnapMiddle); 
+	//Standard_Real mywidth{2.0};
+	//mySketcher->SetWidth(mywidth);
+	mySketcher->SetSnap(SnapNearest); 
 }
 
 const Handle(AIS_InteractiveContext) & OCCView::getContext() const{
@@ -668,6 +666,24 @@ void OCCView::onMButtonDown(const int theFlags, const QPoint thePoint){
 	if (theFlags & CASCADESHORTCUTKEY)
 		myCurrentMode = CurAction3d_DynamicPanning;
 	activateCursor(myCurrentMode);
+
+
+	//if (theFlags & CASCADESHORTCUTKEY)
+	//{
+	//	myCurrentMode = CurAction3d_DynamicPanning;
+	//	myXmax = thePoint.x();
+ //       myYmax = thePoint.y();
+	//}
+	//else
+	//{
+	//	myCurrentMode = CurAction3d_DynamicRotation;
+		/*if(m_fKeyPoint.x() != 987654321 || m_fKeyPoint.y() != 987654321)
+			m_view->StartRotation(event->pos().x(), event->pos().y());
+		else*/
+	//	myView->StartRotation(thePoint.x(), thePoint.y());
+	//}
+	//activateCursor(myCurrentMode);
+
 }
 
 void OCCView::onRButtonDown(const int theFlags, const QPoint thePoint){
@@ -746,23 +762,28 @@ void OCCView::onRButtonUp(const int theFlags, const QPoint thePoint){
 }
 
 void OCCView::onMouseMove(const int theFlags, const QPoint thePoint){
-	if (theFlags & Qt::LeftButton){
+	if (theFlags & Qt::LeftButton)
+	{
 		drawRubberBand(myXmin, myYmin, thePoint.x(), thePoint.y());
 
 		dragEvent(thePoint.x(), thePoint.y(), 1);
 	}
 
-	//// Ctrl for multi selection.
-	if (theFlags & Qt::ControlModifier){
+	// Ctrl for multi selection.
+	if (theFlags & Qt::ControlModifier)
+	{
 		multiMoveEvent(thePoint.x(), thePoint.y());
 	}
-	else{
+	else
+	{
 		moveEvent(thePoint.x(), thePoint.y());
 	}
 
-	//// Middle button.
-	if (theFlags & Qt::MidButton){
-		switch (myCurrentMode){
+	// Middle button.
+	if (theFlags & Qt::MidButton)
+	{
+		switch (myCurrentMode)
+		{
 		case CurAction3d_DynamicRotation:
 			myView->Rotation(thePoint.x(), thePoint.y());
 			break;
@@ -781,6 +802,7 @@ void OCCView::onMouseMove(const int theFlags, const QPoint thePoint){
 			break;
 		}
 	}
+
 	if (!theFlags)
 	{
 		if (myCurrentMode == SketcherAction)
@@ -791,8 +813,9 @@ void OCCView::onMouseMove(const int theFlags, const QPoint thePoint){
 			myView->Proj(projVx, projVy, projVz);
 			mySketcher->OnMouseMoveEvent(my_v3dX, my_v3dY, my_v3dZ, projVx, projVy, projVz);
 		}
-		//m_myContext->MoveTo(thePoint.x(), thePoint.y(), m_myView, Standard_True);
+		myContext->MoveTo(thePoint.x(), thePoint.y(), myView, Standard_True);
 	}
+
 }
 
 // TheState == -1  button down
@@ -826,7 +849,7 @@ void OCCView::inputEvent(const int x, const int y){
 }
 
 void OCCView::moveEvent(const int x, const int y){
-
+	myContext->MoveTo(x, y, myView, Standard_True);
 }
 
 void OCCView::multiMoveEvent(const int x, const int y){

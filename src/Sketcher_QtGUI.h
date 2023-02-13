@@ -1,13 +1,13 @@
 #ifndef Sketcher_QtGUI_H
-#define Sketcher_QtGUI_H Sketcher_QtGUI_H
+#define Sketcher_QtGUI_H
 
 #include "Sketcher_GUI.h"
 #include "Sketcher_Object.h"
 
-//#include "Sketcher_PropertyArc.h"
-//#include "Sketcher_PropertyCircle.h"
-//#include "Sketcher_PropertyLine.h"
-//#include "Sketcher_PropertyPoint.h"
+#include "Sketcher_PropertyArc.h"
+#include "Sketcher_PropertyCircle.h"
+#include "Sketcher_PropertyLine.h"
+#include "Sketcher_PropertyPoint.h"
 
 #include <QWidget>
 
@@ -56,10 +56,10 @@ private:
 
 	//members
 
-	//Sketcher_PropertyArc*								prop_arc;
-	//Sketcher_PropertyCircle*							prop_circle;
-	//Sketcher_PropertyLine*								prop_line;
-	//Sketcher_PropertyPoint*								prop_point;
+	Sketcher_PropertyArc*								prop_arc;
+	Sketcher_PropertyCircle*							prop_circle;
+	Sketcher_PropertyLine*								prop_line;
+	Sketcher_PropertyPoint*								prop_point;
 
 };
 
