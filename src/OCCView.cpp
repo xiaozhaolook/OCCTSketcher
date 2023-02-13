@@ -77,8 +77,6 @@ void OCCView::init(void){
     mySketcher->SetPolylineMode(Standard_True);
 	//mySketcher->SetType(AuxiliarySketcherType);
 
-	//Standard_Real mywidth{2.0};
-	//mySketcher->SetWidth(mywidth);
 	mySketcher->SetSnap(SnapNearest); 
 }
 
@@ -495,7 +493,7 @@ void OCCView::onGrid(){
         gp_Dir xDirection(1,0,0),yDirection(0,1,0),zDirection(0,0,1);
         gp_Ax3 diyPlane;
 
-        diyPlane.SetDirection(yDirection);
+        diyPlane.SetDirection(zDirection);
         aViewer->SetPrivilegedPlane(diyPlane);
         mySketcher->SetCoordinateSystem(diyPlane);
 
@@ -654,15 +652,6 @@ void OCCView::onLButtonDown(const int theFlags, const QPoint thePoint){
 }
 
 void OCCView::onMButtonDown(const int theFlags, const QPoint thePoint){
-	//myXmin = thePoint.x();
-	//myYmin = thePoint.y();
-	//myXmax = thePoint.x();
-	//myYmax = thePoint.y();
-
-	//if (myCurrentMode == CurAction3d_DynamicRotation)
-	//{
-	//	myView->StartRotation(thePoint.x(), thePoint.y());
-	//}
 	if (theFlags & CASCADESHORTCUTKEY)
 		myCurrentMode = CurAction3d_DynamicPanning;
 	activateCursor(myCurrentMode);
@@ -954,7 +943,7 @@ void OCCView::DrawRectangle(const int MinX, const int MinY,
                          const int MaxX, const int MaxY, const bool Draw)
 {
     QPainter thePainter(this);
-//    thePainter.setRasterOp(Qt::XorROP); //改了
+//    thePainter.setRasterOp(Qt::XorROP); //
     thePainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     thePainter.setPen(Qt::white);
 
