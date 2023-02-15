@@ -633,8 +633,8 @@ void OCCView::onLButtonDown(const int theFlags, const QPoint thePoint){
 		case CurAction3d_GlobalPanning:
 			break;
 		case SketcherAction:
-			myView->Convert(myXmin, myYmin, my_v3dX, my_v3dY, my_v3dZ);
-			myView->Proj(projVx, projVy, projVz);
+			myView->Convert(myXmin, myYmin, my_v3dX, my_v3dY, my_v3dZ);//Converts the projected point into a point
+			myView->Proj(projVx, projVy, projVz);// Returns the projection vector.
 			mySketcher->OnMouseInputEvent(my_v3dX, my_v3dY, my_v3dZ, projVx, projVy, projVz);
 
 			break;
@@ -971,4 +971,52 @@ void OCCView::DrawRectangle(const int MinX, const int MinY,
 }
 
 
+//凯哥的选取面
+void OCCView::startSelectPlains() {
+	if (myContext->HasDetectedShape()) {
+		TopoDS_Shape abc = myContext->DetectedShape();
+		if (abc.ShapeType() == TopAbs_ShapeEnum::TopAbs_FACE) {
+			auto V = TopoDS::Face(abc);
+			++num_P;
+			std::string str_output = std::to_string(num_P) + " Plain";
+			QString qstr_output = QString::fromStdString(str_output);
+			PairPlains.emplace_back(qstr_output, V);
+			emit faceSelectCompleteSigal();
+			selectFaces = false;
+		}
+	}
+}
 
+//求一个面的法向量 参数 TopoDS_Face F = TopoDS::Face(PairPlains.back().second);
+gp_Vec OCCView::NormalVector(TopoDS_Face F)
+{
+	TopLoc_Location location;
+	Handle(Geom_Surface) aGeometricSurface = BRep_Tool::Surface(F, location);
+	Handle(Geom_Plane) aPlane = Handle(Geom_Plane)::DownCast(aGeometricSurface);
+	agpPlane = aPlane->Pln();       //将选中TopoDS_Face面转换为gp_Pln平面，agpPlane为全局变量
+	gp_Ax1 norm = agpPlane.Axis();
+	gp_Dir dir = norm.Direction();
+	gp_Vec move = gp_Vec(dir);
+	return move;
+}
+
+//将鼠标二维坐标点转换为OCC三维坐标系中选中面上的三维坐标点
+gp_Pnt OCCView::ConvertClickToPoint(const QPoint thePoint, Handle(V3d_View) myView)
+{
+	double x = thePoint.x();
+	double y = thePoint.y();
+
+	gp_Pln PlaneOfTheView = agpPlane;  //注意agpPlane是全局变量，创建一个平面，
+									   //用于将鼠标点投射在此面上，这是将鼠标点投射在选定面上的
+									   //基础
+	Standard_Real X, Y, Z;
+	myView->Convert(int(x), int(y), X, Y, Z);  //将鼠标点坐标转换为OCC三维坐标
+	gp_Pnt ConvertedPoint(X, Y, Z);
+	gp_Pnt2d ConvertedPointOnPlane = ProjLib::Project(PlaneOfTheView, ConvertedPoint);
+
+	gp_Pnt ResultPoint = ElSLib::Value(ConvertedPointOnPlane.X(),
+		ConvertedPointOnPlane.Y(),
+		PlaneOfTheView);
+
+	return ResultPoint;     //将鼠标点二维坐标转换为基于OCC三维坐标选定面上的坐标（OCC三维坐标）
+}

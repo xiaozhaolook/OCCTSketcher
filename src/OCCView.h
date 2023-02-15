@@ -16,6 +16,13 @@
 #include <WNT_Window.hxx>
 #include <AIS_InteractiveContext.hxx>
 #include <OpenGl_GraphicDriver.hxx>
+#include <GC_MakeSegment.hxx>
+#include <TopoDS.hxx>
+#include <TopoDS_Face.hxx>
+#include <Geom_Curve.hxx>
+#include <BRep_Tool.hxx>
+#include <ProjLib.hxx>
+#include <ElSLib.hxx>
 
 #include "Sketcher.h"
 #include "Sketcher_QtGUI.h"
@@ -150,6 +157,11 @@ protected:
 	virtual void onRButtonUp(const int theFlags, const QPoint thePoint);
 	virtual void onMouseMove(const int theFlags, const QPoint thePoint);
     void DrawRectangle( const int MinX, const int MinY, const int MaxX, const int MaxY, const bool Draw );
+	void startSelectPlains();//凯哥的选取面
+	void faceSelectCompleteSigal();
+	gp_Vec OCCView::NormalVector(TopoDS_Face F);//求一个面的法向量
+	gp_Pnt OCCView::ConvertClickToPoint(const QPoint thePoint, Handle(V3d_View) myView);
+
 
 protected:
 	void init(void);
@@ -186,7 +198,11 @@ private:
 	bool												GRIDCounter;
 	Sketcher *											mySketcher;
     Standard_Real										my_v3dX, my_v3dY, my_v3dZ;
-    Standard_Real									projVx, projVy, projVz;
+    Standard_Real			 						    projVx, projVy, projVz;
+	int                                                 num_P{ 0 };
+	bool                                                selectFaces{ false };
+	std::vector<std::pair<QString, TopoDS_Shape>>       PairPlains;
+	gp_Pln                                              agpPlane;
 };
 
 #endif
