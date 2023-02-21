@@ -73,8 +73,9 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 		myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		if (!myPolylineMode)
 		{
-			myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-            myContext->Display(myRubberLine, 0, -1,1);
+			//myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
+            //myContext->Display(myRubberLine, 0, -1,1);
+			firstPoint = true;
 			myArc3PAction = Input_2ArcPoint;
 		}
 		else
@@ -108,8 +109,8 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 			myRubberCircle->SetLastParam(u2);
 		}
 
-        myContext->Remove(myRubberLine,1);
-        myContext->Display(myRubberCircle, 0, -1,1);
+        myContext->Remove(myRubberLine,0);
+        myContext->Display(myRubberCircle, 0, -1,0);
         myContext->Redisplay(myRubberCircle,1);
 
 		myArc3PAction = Input_3ArcPoint;
@@ -121,10 +122,12 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 		Handle(Geom2d_CartesianPoint) Geom2d_Point2 = new Geom2d_CartesianPoint(mySecondgp_Pnt2d);
 		Handle(Geom2d_CartesianPoint) Geom2d_Point3 = new Geom2d_CartesianPoint(curPnt2d);
 
-		Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(Geom2d_Point1, Geom2d_Point2, Geom2d_Point3, 1.0e-10);
-		if (tempGcc_Circ2d3Tan.IsDone() && tempGcc_Circ2d3Tan.NbSolutions()>0)
+		//Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(Geom2d_Point1, Geom2d_Point2, Geom2d_Point3, 1.0e-10);
+		Geom2dGcc_Circ2d3Tan* tempGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(Geom2d_Point1, Geom2d_Point2, Geom2d_Point3, 1.0e-10);
+
+		if (tempGcc_Circ2d3Tan->IsDone() && tempGcc_Circ2d3Tan->NbSolutions()>0)
 		{
-			Handle(Geom2d_Arc) myGeom2d_Arc = new Geom2d_Arc(tempGcc_Circ2d3Tan.ThisSolution(1));
+			Handle(Geom2d_Arc) myGeom2d_Arc = new Geom2d_Arc(tempGcc_Circ2d3Tan->ThisSolution(1));
 			myGeom2d_Arc->SetParam(myFirstgp_Pnt2d, mySecondgp_Pnt2d, curPnt2d);
 
 			Handle(Geom_Circle) Geom_Circle1 = new Geom_Circle(ElCLib::To3d(curCoordinateSystem.Ax2(), myGeom2d_Arc->Circ2d()));
@@ -135,7 +138,7 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 
 			AddObject(myGeom2d_Arc, myAIS_Circle, ArcSketcherObject);
 
-            myContext->Remove(myRubberCircle,1);
+            myContext->Remove(myRubberCircle,0);
             myContext->Display(myAIS_Circle,1);
 
 			myArc3PAction = Input_1ArcPoint;
@@ -146,10 +149,13 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 	{
 		TempGeom2d_Point->SetPnt2d(curPnt2d);
 		Geom2dGcc_QualifiedCurve temp2d_QualifiedCurve(temp2dAdaptor_Curve, GccEnt_unqualified);
-		Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(temp2d_QualifiedCurve, FirstGeom2d_Point, TempGeom2d_Point, 1.0e-6, 0);
-		if (tempGcc_Circ2d3Tan.IsDone() && tempGcc_Circ2d3Tan.NbSolutions()>0)
+		//Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(temp2d_QualifiedCurve, FirstGeom2d_Point, TempGeom2d_Point, 1.0e-6, 0);
+
+		Geom2dGcc_Circ2d3Tan* tempGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(temp2d_QualifiedCurve, FirstGeom2d_Point, TempGeom2d_Point, 1.0e-6, 0);
+
+		if (tempGcc_Circ2d3Tan->IsDone() && tempGcc_Circ2d3Tan->NbSolutions()>0)
 		{
-			temp2d_Circ = tempGcc_Circ2d3Tan.ThisSolution(1);
+			temp2d_Circ = tempGcc_Circ2d3Tan->ThisSolution(1);
 
 			u1 = ElCLib::Parameter(temp2d_Circ, myFirstgp_Pnt2d);
 			u2 = ElCLib::Parameter(temp2d_Circ, curPnt2d);
@@ -170,7 +176,7 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 			Handle(AIS_Circle) myAIS_Circle = new AIS_Circle(Geom_Circle1);
 			myAIS_Circle->SetFirstParam(myGeom2d_Arc->FirstParameter());
 			myAIS_Circle->SetLastParam(myGeom2d_Arc->LastParameter());
-            myContext->Display(myAIS_Circle,1);
+            myContext->Display(myAIS_Circle,0);
 
 			AddObject(myGeom2d_Arc, myAIS_Circle, ArcSketcherObject);
 
@@ -214,6 +220,16 @@ void Sketcher_CommandArc3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
         myContext->Redisplay(myRubberLine,1);
+
+		//if (firstPoint)
+		//{
+		//	myContext->Display(myRubberLine, 0, -1, true);
+		//	firstPoint = false;
+		//}
+		//else
+		//{
+		//	myContext->Redisplay(myRubberLine, true);
+		//}
 		break;
 	case Input_3ArcPoint:
 	{
@@ -234,10 +250,12 @@ void Sketcher_CommandArc3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 		third_Pnt = ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d);
 		TempGeom2d_Point->SetPnt2d(curPnt2d);
 		Geom2dGcc_QualifiedCurve temp2d_QualifiedCurve(temp2dAdaptor_Curve, GccEnt_unqualified);
-		Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(temp2d_QualifiedCurve, FirstGeom2d_Point, TempGeom2d_Point, 1.0e-6, 0);
-		if (tempGcc_Circ2d3Tan.IsDone() && tempGcc_Circ2d3Tan.NbSolutions()>0)
+		//Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(temp2d_QualifiedCurve, FirstGeom2d_Point, TempGeom2d_Point, 1.0e-6, 0);
+		Geom2dGcc_Circ2d3Tan* tempGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(temp2d_QualifiedCurve, FirstGeom2d_Point, TempGeom2d_Point, 1.0e-6, 0);
+
+		if (tempGcc_Circ2d3Tan->IsDone() && tempGcc_Circ2d3Tan->NbSolutions()>0)
 		{
-			temp2d_Circ = tempGcc_Circ2d3Tan.ThisSolution(1);
+			temp2d_Circ = tempGcc_Circ2d3Tan->ThisSolution(1);
 
 			u1 = ElCLib::Parameter(temp2d_Circ, myFirstgp_Pnt2d);
 			u2 = ElCLib::Parameter(temp2d_Circ, curPnt2d);

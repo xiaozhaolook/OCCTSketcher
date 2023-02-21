@@ -98,18 +98,20 @@ Standard_Boolean Sketcher_CommandCircleP2Tan::MouseInputEvent(const gp_Pnt2d& th
 			Geom2dGcc_QualifiedCurve SecondQualifiedCurve(SecondAdaptor_Curve, GccEnt_unqualified);
 			Geom2dGcc_QualifiedCurve ThirdQualifiedCurve(ThirdAdaptor_Curve, GccEnt_unqualified);
 
-			Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(SecondQualifiedCurve, ThirdQualifiedCurve, First2dPoint, 1.0e-12, u2, u_temp);
-			if (myGcc_Circ2d3Tan.IsDone() && myGcc_Circ2d3Tan.NbSolutions() >0)
+			//Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(SecondQualifiedCurve, ThirdQualifiedCurve, First2dPoint, 1.0e-12, u2, u_temp);
+			Geom2dGcc_Circ2d3Tan* myGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(SecondQualifiedCurve, ThirdQualifiedCurve, First2dPoint, 1.0e-12, u2, u_temp);
+
+			if (myGcc_Circ2d3Tan->IsDone() && myGcc_Circ2d3Tan->NbSolutions() >0)
 			{
-				temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(1);
+				temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(1);
 				Standard_Integer bestCircleIndex = 1;
 				if (SumDistanceToCircle())
 				{
 					minDistance = curDistance;
 					best_Circ = ElCLib::To3d(curCoordinateSystem.Ax2(), temp_Circ2d);
-					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan.NbSolutions(); i++)
+					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan->NbSolutions(); i++)
 					{
-						temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(i);
+						temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(i);
 						if (SumDistanceToCircle() && minDistance > curDistance)
 						{
 							minDistance = curDistance;
@@ -117,7 +119,7 @@ Standard_Boolean Sketcher_CommandCircleP2Tan::MouseInputEvent(const gp_Pnt2d& th
 							best_Circ = ElCLib::To3d(curCoordinateSystem.Ax2(), temp_Circ2d);
 						}
 					}
-					Handle(Geom2d_Circle) myGeom2d_Circle = new Geom2d_Circle(myGcc_Circ2d3Tan.ThisSolution(bestCircleIndex));
+					Handle(Geom2d_Circle) myGeom2d_Circle = new Geom2d_Circle(myGcc_Circ2d3Tan->ThisSolution(bestCircleIndex));
 
 					Handle(Geom_Circle) Geom_Circle1 = new Geom_Circle(best_Circ);
 					Handle(AIS_Circle) myAIS_Circle = new AIS_Circle(Geom_Circle1);
@@ -173,17 +175,19 @@ void Sketcher_CommandCircleP2Tan::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 			Geom2dGcc_QualifiedCurve SecondQualifiedCurve(SecondAdaptor_Curve, GccEnt_unqualified);
 			Geom2dGcc_QualifiedCurve ThirdQualifiedCurve(ThirdAdaptor_Curve, GccEnt_unqualified);
 
-			Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(SecondQualifiedCurve, ThirdQualifiedCurve, First2dPoint, 1.0e-12, u2, u_temp);
-			if (myGcc_Circ2d3Tan.IsDone() && myGcc_Circ2d3Tan.NbSolutions() >0)
+			//Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(SecondQualifiedCurve, ThirdQualifiedCurve, First2dPoint, 1.0e-12, u2, u_temp);
+			Geom2dGcc_Circ2d3Tan* myGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(SecondQualifiedCurve, ThirdQualifiedCurve, First2dPoint, 1.0e-12, u2, u_temp);
+
+			if (myGcc_Circ2d3Tan->IsDone() && myGcc_Circ2d3Tan->NbSolutions() >0)
 			{
-				temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(1);
+				temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(1);
 				if (SumDistanceToCircle())
 				{
 					minDistance = curDistance;
 					best_Circ = ElCLib::To3d(curCoordinateSystem.Ax2(), temp_Circ2d);
-					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan.NbSolutions(); i++)
+					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan->NbSolutions(); i++)
 					{
-						temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(i);
+						temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(i);
 						if (SumDistanceToCircle() && minDistance > curDistance)
 						{
 							minDistance = curDistance;

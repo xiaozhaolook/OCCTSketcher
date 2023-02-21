@@ -17,7 +17,18 @@
 #include <AIS_Line.hxx>
 
 //#include <AIS_Drawer.hxx>
+#include <Prs3d_Drawer.hxx>
 #include <Prs3d_LineAspect.hxx>
+
+#include <AIS_Line.hxx>
+#include <AIS_Circle.hxx>
+#include <Geom_Circle.hxx>
+#include <Geom_CartesianPoint.hxx>
+#include <AIS_Point.hxx>
+#include <TColStd_HSequenceOfTransient.hxx>
+#include <AIS_InteractiveContext.hxx>
+#include <TDocStd_Owner.hxx>
+#include <TDocStd_Document.hxx>
 
 #define SKETCHER_RADIUS 0
 
@@ -206,6 +217,10 @@ protected:
 	Handle(AIS_Line)						myRubberLine;
 	TCollection_ExtendedString				ObjectName;
 	Standard_Integer						ObjectCounter;
+	bool                                    firstPoint;
+
+
+
 };
 
 #endif

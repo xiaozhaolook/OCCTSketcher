@@ -7,8 +7,8 @@ IMPLEMENT_STANDARD_RTTIEXT(Sketcher_CommandArcCenter2P, Sketcher_Command)
 * \brief Constructs a Sketcher_CommandArcCenter2P
 */
 Sketcher_CommandArcCenter2P::Sketcher_CommandArcCenter2P()
-: Sketcher_Command("ArcCenter2P."),
-mySecondgp_Pnt2d(gp::Origin2d())
+	: Sketcher_Command("ArcCenter2P."),
+	mySecondgp_Pnt2d(gp::Origin2d())
 {
 	myArcCenter2PAction = Nothing;
 
@@ -62,13 +62,13 @@ Standard_Boolean Sketcher_CommandArcCenter2P::MouseInputEvent(const gp_Pnt2d& th
 		myRubberCircle->SetCircle(tempGeom_Circle);
 		myRubberCircle->SetFirstParam(0);
 		myRubberCircle->SetLastParam(M_PI * 2);
-        myContext->Display(myRubberCircle, 0, -1,1);
+		myContext->Display(myRubberCircle, 0, -1, 0);
 
 		myRubberCenterPoint->SetComponent(myFirstPoint);
 		myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-        myContext->Display(myRubberCenterPoint, 0, -1,1);
-        myContext->Redisplay(myRubberCenterPoint,1);
-        myContext->Display(myRubberLine, 0, -1,1);
+		myContext->Display(myRubberCenterPoint, 0, -1, 0);
+		myContext->Redisplay(myRubberCenterPoint, 0);
+		myContext->Display(myRubberLine, 0, -1, 1);
 
 		myArcCenter2PAction = Input_1ArcPoint;
 		break;
@@ -84,8 +84,8 @@ Standard_Boolean Sketcher_CommandArcCenter2P::MouseInputEvent(const gp_Pnt2d& th
 		myRubberCircle->SetCircle(tempGeom_Circle);
 		tempGeom2d_Circle = Handle(Geom2d_Circle)::DownCast(GeomAPI::To2d(tempGeom_Circle, gp_Pln(curCoordinateSystem)));
 
-        myContext->Remove(myRubberLine,1);
-        myContext->Redisplay(myRubberCircle,1);
+		myContext->Remove(myRubberLine, 0);
+		myContext->Redisplay(myRubberCircle, 1);
 
 		myArcCenter2PAction = Input_MidPoint;
 	}
@@ -98,10 +98,13 @@ Standard_Boolean Sketcher_CommandArcCenter2P::MouseInputEvent(const gp_Pnt2d& th
 			Handle(Geom2d_CartesianPoint) Geom2d_Point2 = new Geom2d_CartesianPoint(myMidgp_Pnt2d);
 			Handle(Geom2d_CartesianPoint) Geom2d_Point3 = new Geom2d_CartesianPoint(curPnt2d);
 
-			Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(Geom2d_Point1, Geom2d_Point2, Geom2d_Point3, 1.0e-10);
-			if (tempGcc_Circ2d3Tan.IsDone() && tempGcc_Circ2d3Tan.NbSolutions()>0)
+			//Geom2dGcc_Circ2d3Tan tempGcc_Circ2d3Tan(Geom2d_Point1, Geom2d_Point2, Geom2d_Point3, 1.0e-10);
+			//std::unique_ptr<Geom2dGcc_Circ2d3Tan> tempGcc_Circ2d3Tan = std::make_unique<Geom2dGcc_Circ2d3Tan>(Geom2d_Point1, Geom2d_Point2, Geom2d_Point3, 1.0e-10);
+			Geom2dGcc_Circ2d3Tan* tempGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(Geom2d_Point1, Geom2d_Point2, Geom2d_Point3, 1.0e-10);
+
+			if (tempGcc_Circ2d3Tan->IsDone() && tempGcc_Circ2d3Tan->NbSolutions() > 0)
 			{
-				Handle(Geom2d_Arc) myGeom2d_Arc = new Geom2d_Arc(tempGcc_Circ2d3Tan.ThisSolution(1));
+				Handle(Geom2d_Arc) myGeom2d_Arc = new Geom2d_Arc(tempGcc_Circ2d3Tan->ThisSolution(1));
 				myGeom2d_Arc->SetParam(mySecondgp_Pnt2d, myMidgp_Pnt2d, curPnt2d);
 
 				Handle(Geom_Circle) Geom_Circle1 = new Geom_Circle(ElCLib::To3d(curCoordinateSystem.Ax2(), myGeom2d_Arc->Circ2d()));
@@ -112,9 +115,9 @@ Standard_Boolean Sketcher_CommandArcCenter2P::MouseInputEvent(const gp_Pnt2d& th
 
 				AddObject(myGeom2d_Arc, myAIS_Circle, ArcSketcherObject);
 
-                myContext->Remove(myRubberCircle,1);
-                myContext->Remove(myRubberCenterPoint,1);
-                myContext->Display(myAIS_Circle,1);
+				myContext->Remove(myRubberCircle, 0);
+				myContext->Remove(myRubberCenterPoint, 0);
+				myContext->Display(myAIS_Circle, 1);
 
 				myArcCenter2PAction = Input_CenterArc;
 			}
@@ -146,11 +149,11 @@ void Sketcher_CommandArcCenter2P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 		curPnt2d = myAnalyserSnap->MouseMoveException(myFirstgp_Pnt2d, thePnt2d, Circle_CenterPnt, Standard_True);
 		radius = myFirstgp_Pnt2d.Distance(curPnt2d);
 		tempGeom_Circle->SetRadius(radius);
-        myContext->Redisplay(myRubberCircle,1);
+		myContext->Redisplay(myRubberCircle, 0);
 
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-        myContext->Redisplay(myRubberLine,1);
+		myContext->Redisplay(myRubberLine, 1);
 		break;
 	case Input_MidPoint:
 		if (ProjectOnCircle(thePnt2d))
@@ -175,7 +178,7 @@ void Sketcher_CommandArcCenter2P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 				myRubberCircle->SetCircle(tempGeom_Circle);
 				myRubberCircle->SetFirstParam(ElCLib::Parameter(tempGeom_Circle->Circ(), mySecondPoint->Pnt()));
 				myRubberCircle->SetLastParam(ElCLib::Parameter(tempGeom_Circle->Circ(), third_Pnt));
-                myContext->Redisplay(myRubberCircle,1);
+				myContext->Redisplay(myRubberCircle, 1);
 			}
 		}
 		break;
@@ -198,10 +201,10 @@ void Sketcher_CommandArcCenter2P::CancelEvent()
 	case Input_CenterArc: break;
 
 	case Input_1ArcPoint:
-    case Input_MidPoint:	myContext->Remove(myRubberLine,1);
+	case Input_MidPoint:	myContext->Remove(myRubberLine, 1);
 
-    case Input_2ArcPoint:	myContext->Remove(myRubberCircle,1);
-        myContext->Remove(myRubberCenterPoint,1);
+	case Input_2ArcPoint:	myContext->Remove(myRubberCircle, 0);
+		myContext->Remove(myRubberCenterPoint, 1);
 		break;
 	default: break;
 	}

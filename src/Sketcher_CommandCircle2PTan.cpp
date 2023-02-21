@@ -63,8 +63,9 @@ Standard_Boolean Sketcher_CommandCircle2PTan::MouseInputEvent(const gp_Pnt2d& th
 		First2dPoint->SetPnt2d(curPnt2d);
 		myFirstPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 
-		myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
-        myContext->Display(myRubberLine, 0, -1,1);
+		//myRubberLine->SetPoints(myFirstPoint, myFirstPoint);
+        //myContext->Display(myRubberLine, 0, -1,1);
+		firstPoint = true;
 		myCircle2PTanAction = Input_2CirclePoint;
 		break;
 	case Input_2CirclePoint:
@@ -85,18 +86,20 @@ Standard_Boolean Sketcher_CommandCircle2PTan::MouseInputEvent(const gp_Pnt2d& th
 			Geom2dAdaptor_Curve ThirdAdaptor_Curve(tempGeom2d_Curve);
 			Geom2dGcc_QualifiedCurve ThirdQualifiedCurve(ThirdAdaptor_Curve, GccEnt_unqualified);
 
-			Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(ThirdQualifiedCurve, First2dPoint, Second2dPoint, 1.0e-12, u_temp);
-			if (myGcc_Circ2d3Tan.IsDone() && myGcc_Circ2d3Tan.NbSolutions() >0)
+			//Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(ThirdQualifiedCurve, First2dPoint, Second2dPoint, 1.0e-12, u_temp);
+			Geom2dGcc_Circ2d3Tan* myGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(ThirdQualifiedCurve, First2dPoint, Second2dPoint, 1.0e-12, u_temp);
+
+			if (myGcc_Circ2d3Tan->IsDone() && myGcc_Circ2d3Tan->NbSolutions() >0)
 			{
-				temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(1);
+				temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(1);
 				Standard_Integer bestCircleIndex = 1;
 				if (SumDistanceToCircle())
 				{
 					minDistance = curDistance;
 					best_Circ = ElCLib::To3d(curCoordinateSystem.Ax2(), temp_Circ2d);
-					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan.NbSolutions(); i++)
+					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan->NbSolutions(); i++)
 					{
-						temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(i);
+						temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(i);
 						if (SumDistanceToCircle() && minDistance > curDistance)
 						{
 							minDistance = curDistance;
@@ -104,7 +107,7 @@ Standard_Boolean Sketcher_CommandCircle2PTan::MouseInputEvent(const gp_Pnt2d& th
 							best_Circ = ElCLib::To3d(curCoordinateSystem.Ax2(), temp_Circ2d);
 						}
 					}
-					Handle(Geom2d_Circle) myGeom2d_Circle = new Geom2d_Circle(myGcc_Circ2d3Tan.ThisSolution(bestCircleIndex));
+					Handle(Geom2d_Circle) myGeom2d_Circle = new Geom2d_Circle(myGcc_Circ2d3Tan->ThisSolution(bestCircleIndex));
 
 					Handle(Geom_Circle) Geom_Circle1 = new Geom_Circle(best_Circ);
 					Handle(AIS_Circle) myAIS_Circle = new AIS_Circle(Geom_Circle1);
@@ -143,7 +146,16 @@ void Sketcher_CommandCircle2PTan::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 	case Input_2CirclePoint:
 		mySecondPoint->SetPnt(ElCLib::To3d(curCoordinateSystem.Ax2(), curPnt2d));
 		myRubberLine->SetPoints(myFirstPoint, mySecondPoint);
-        myContext->Redisplay(myRubberLine,1);
+        //myContext->Redisplay(myRubberLine,1);
+		if (firstPoint)
+		{
+			myContext->Display(myRubberLine, 0, -1, true);
+			firstPoint = false;
+		}
+		else
+		{
+			myContext->Redisplay(myRubberLine, true);
+		}
 		break;
 	case Input_3CircleTan:
 		SelectCurve();
@@ -152,17 +164,19 @@ void Sketcher_CommandCircle2PTan::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 			Geom2dAdaptor_Curve ThirdAdaptor_Curve(tempGeom2d_Curve);
 			Geom2dGcc_QualifiedCurve ThirdQualifiedCurve(ThirdAdaptor_Curve, GccEnt_unqualified);
 
-			Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(ThirdQualifiedCurve, First2dPoint, Second2dPoint, 1.0e-6, u_temp);
-			if (myGcc_Circ2d3Tan.IsDone() && myGcc_Circ2d3Tan.NbSolutions() >0)
+			//Geom2dGcc_Circ2d3Tan myGcc_Circ2d3Tan(ThirdQualifiedCurve, First2dPoint, Second2dPoint, 1.0e-6, u_temp);
+			Geom2dGcc_Circ2d3Tan* myGcc_Circ2d3Tan = new Geom2dGcc_Circ2d3Tan(ThirdQualifiedCurve, First2dPoint, Second2dPoint, 1.0e-6, u_temp);
+
+			if (myGcc_Circ2d3Tan->IsDone() && myGcc_Circ2d3Tan->NbSolutions() >0)
 			{
-				temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(1);
+				temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(1);
 				if (SumDistanceToCircle())
 				{
 					minDistance = curDistance;
 					best_Circ = ElCLib::To3d(curCoordinateSystem.Ax2(), temp_Circ2d);
-					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan.NbSolutions(); i++)
+					for (Standard_Integer i = 2; i <= myGcc_Circ2d3Tan->NbSolutions(); i++)
 					{
-						temp_Circ2d = myGcc_Circ2d3Tan.ThisSolution(i);
+						temp_Circ2d = myGcc_Circ2d3Tan->ThisSolution(i);
 						if (SumDistanceToCircle() && minDistance > curDistance)
 						{
 							minDistance = curDistance;
@@ -205,7 +219,7 @@ void Sketcher_CommandCircle2PTan::CancelEvent()
 
     case Input_2CirclePoint: 	myContext->Remove(myRubberLine,1);
 		break;
-    case Input_3CircleTan: 		myContext->Remove(myRubberLine,1);
+    case Input_3CircleTan: 		myContext->Remove(myRubberLine,0);
         myContext->Remove(myRubberCircle,1);
 		break;
 	default: break;

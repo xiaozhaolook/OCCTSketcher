@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandArcCenter2P_H
-#define Sketcher_CommandArcCenter2P_H Sketcher_CommandArcCenter2P_H
+#define Sketcher_CommandArcCenter2P_H 
 
 #include "Sketcher_Command.h"
 #include "Geom2d_Arc.h"
@@ -17,6 +17,12 @@
 #include <gce_MakeCirc.hxx>
 #include <gce_ErrorType.hxx>
 #include <GeomAPI.hxx>
+
+#include <Geom2d_CartesianPoint.hxx>
+#include <Geom_CartesianPoint.hxx>
+#include <gp_Pln.hxx>
+
+#include <ElCLib.hxx>
 
 class Geom_Circle;
 class AIS_Line;

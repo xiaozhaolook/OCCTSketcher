@@ -77,7 +77,7 @@ void OCCView::init(void){
     mySketcher->SetPolylineMode(Standard_True);
 	//mySketcher->SetType(AuxiliarySketcherType);
 
-	mySketcher->SetSnap(SnapNearest); 
+	//mySketcher->SetSnap(SnapNearest); 
 }
 
 const Handle(AIS_InteractiveContext) & OCCView::getContext() const{
@@ -517,7 +517,6 @@ void OCCView::onInputPoints(){
 
 void OCCView::onInputLines(){
 	mySketcher->ObjectAction(Line2P_Method);
-	//mySketcher->SetWidth(200);
 	myCurrentMode = SketcherAction;
 }
 
@@ -652,27 +651,17 @@ void OCCView::onLButtonDown(const int theFlags, const QPoint thePoint){
 }
 
 void OCCView::onMButtonDown(const int theFlags, const QPoint thePoint){
-	if (theFlags & CASCADESHORTCUTKEY)
-		myCurrentMode = CurAction3d_DynamicPanning;
-	activateCursor(myCurrentMode);
 
+	// Save the current mouse coordinate in min.
+	myXmin = thePoint.x();
+	myYmin = thePoint.y();
+	myXmax = thePoint.x();
+	myYmax = thePoint.y();
 
-	//if (theFlags & CASCADESHORTCUTKEY)
-	//{
-	//	myCurrentMode = CurAction3d_DynamicPanning;
-	//	myXmax = thePoint.x();
- //       myYmax = thePoint.y();
-	//}
-	//else
-	//{
-	//	myCurrentMode = CurAction3d_DynamicRotation;
-		/*if(m_fKeyPoint.x() != 987654321 || m_fKeyPoint.y() != 987654321)
-			m_view->StartRotation(event->pos().x(), event->pos().y());
-		else*/
-	//	myView->StartRotation(thePoint.x(), thePoint.y());
-	//}
-	//activateCursor(myCurrentMode);
-
+	if (myCurrentMode == CurAction3d_DynamicRotation)
+	{
+		myView->StartRotation(thePoint.x(), thePoint.y());
+	}
 }
 
 void OCCView::onRButtonDown(const int theFlags, const QPoint thePoint){
@@ -802,7 +791,7 @@ void OCCView::onMouseMove(const int theFlags, const QPoint thePoint){
 			myView->Proj(projVx, projVy, projVz);
 			mySketcher->OnMouseMoveEvent(my_v3dX, my_v3dY, my_v3dZ, projVx, projVy, projVz);
 		}
-		myContext->MoveTo(thePoint.x(), thePoint.y(), myView, Standard_True);
+		//myContext->MoveTo(thePoint.x(), thePoint.y(), myView, Standard_True);
 	}
 
 }
@@ -981,7 +970,7 @@ void OCCView::startSelectPlains() {
 			std::string str_output = std::to_string(num_P) + " Plain";
 			QString qstr_output = QString::fromStdString(str_output);
 			PairPlains.emplace_back(qstr_output, V);
-			emit faceSelectCompleteSigal();
+			//emit faceSelectCompleteSigal();
 			selectFaces = false;
 		}
 	}
