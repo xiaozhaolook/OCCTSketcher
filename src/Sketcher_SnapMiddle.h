@@ -1,5 +1,5 @@
 #ifndef Sketcher_SnapMIDDLE_H
-#define Sketcher_SnapMIDDLE_H Sketcher_SnapMIDDLE_H
+#define Sketcher_SnapMIDDLE_H
 
 #include "Sketcher_Snap.h"
 #include "Geom2d_Edge.h"

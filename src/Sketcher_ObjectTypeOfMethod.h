@@ -1,5 +1,5 @@
 #ifndef Sketcher_ObjectTypeOfMethod_H
-#define Sketcher_ObjectTypeOfMethod_H Sketcher_ObjectTypeOfMethod_H
+#define Sketcher_ObjectTypeOfMethod_H 
 
 enum Sketcher_ObjectTypeOfMethod
 {

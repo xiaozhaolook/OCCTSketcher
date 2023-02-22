@@ -1,5 +1,5 @@
 #ifndef Sketcher_GUI_H
-#define Sketcher_GUI_H Sketcher_GUI_H
+#define Sketcher_GUI_H
 
 #include "Sketcher_Object.h"
 #include <gp_Ax3.hxx>

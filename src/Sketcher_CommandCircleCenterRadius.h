@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandCIRCLECENTERRADIUS_H
-#define Sketcher_CommandCIRCLECENTERRADIUS_H Sketcher_CommandCIRCLECENTERRADIUS_H
+#define Sketcher_CommandCIRCLECENTERRADIUS_H 
 
 #include "Sketcher_Command.h"
 

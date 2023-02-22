@@ -1,5 +1,5 @@
 #ifndef Sketcher_SnapIntersection_H
-#define Sketcher_SnapIntersection_H Sketcher_SnapIntersection_H
+#define Sketcher_SnapIntersection_H
 
 #include "Sketcher_Snap.h"
 #include "Geom2d_Edge.h"

@@ -1,8 +1,3 @@
-/**
-* \file Sketcher_PropertyCircle.cxx
-* \brief Implementation file for the class Sketcher_PropertyCircle
-* \author <a href="mailto:sergmaslov@istel.ru?subject=Sketcher_PropertyCircle.cxx">Sergei Maslov</a>
-*/
 #include "Sketcher_PropertyCircle.h"
 
 /**

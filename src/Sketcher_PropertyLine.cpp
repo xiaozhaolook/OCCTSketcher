@@ -1,8 +1,3 @@
-/**
-* \file Sketcher_PropertyLine.cxx
-* \brief Implementation file for the class Sketcher_PropertyLine
-* \author <a href="mailto:sergmaslov@istel.ru?subject=Sketcher_PropertyLine.cxx">Sergei Maslov</a>
-*/
 #include "Sketcher_PropertyLine.h"
 
 /**

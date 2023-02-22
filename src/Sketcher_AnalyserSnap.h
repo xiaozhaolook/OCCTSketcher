@@ -1,5 +1,5 @@
 #ifndef SKETCHER_ANALYSERSNAP_H
-#define SKETCHER_ANALYSERSNAP_H SKETCHER_ANALYSERSNAP_H
+#define SKETCHER_ANALYSERSNAP_H 
 
 #include <Standard_Macro.hxx>
 //#include <Standard_Transient.hxx>

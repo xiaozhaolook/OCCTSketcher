@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandARC3P_H
-#define Sketcher_CommandARC3P_H Sketcher_CommandARC3P_H
+#define Sketcher_CommandARC3P_H 
 
 #include "Sketcher_Command.h"
 #include "Geom2d_Arc.h"

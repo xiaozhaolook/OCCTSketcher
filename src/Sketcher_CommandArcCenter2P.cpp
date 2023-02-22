@@ -121,6 +121,7 @@ Standard_Boolean Sketcher_CommandArcCenter2P::MouseInputEvent(const gp_Pnt2d& th
 
 				myArcCenter2PAction = Input_CenterArc;
 			}
+			//delete tempGcc_Circ2d3Tan;
 		}
 		break;
 	default:break;

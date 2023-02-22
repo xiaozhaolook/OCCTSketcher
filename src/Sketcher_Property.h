@@ -1,8 +1,3 @@
-/**
-* \file Sketcher_Property.hxx
-* \brief Header file for the class Sketcher_Property
-* \author <a href="mailto:sergmaslov@istel.ru?subject=Sketcher_Property.hxx">Sergei Maslov</a>
-*/
 #ifndef Sketcher_Property_H
 #define Sketcher_Property_H
 

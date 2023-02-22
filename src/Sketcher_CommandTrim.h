@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandTrim_H
-#define Sketcher_CommandTrim_H Sketcher_CommandTrim_H
+#define Sketcher_CommandTrim_H 
 
 #include "Sketcher_Command.h"
 #include "Geom2d_Edge.h"

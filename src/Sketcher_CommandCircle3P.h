@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandCIRCLE3P_H
-#define Sketcher_CommandCIRCLE3P_H Sketcher_CommandCIRCLE3P_H
+#define Sketcher_CommandCIRCLE3P_H 
 
 #include "Sketcher_Command.h"
 

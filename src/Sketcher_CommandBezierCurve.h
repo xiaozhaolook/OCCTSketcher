@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandBezierCurve_H
-#define Sketcher_CommandBezierCurve_H Sketcher_CommandBezierCurve_H
+#define Sketcher_CommandBezierCurve_H 
 
 #include "Sketcher_Command.h"
 

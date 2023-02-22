@@ -1,8 +1,3 @@
-/**
-* \file Sketcher_PropertyArc.cxx
-* \brief Implementation file for the class Sketcher_PropertyArc
-* \author <a href="mailto:sergmaslov@istel.ru?subject=Sketcher_PropertyArc.cxx">Sergei Maslov</a>
-*/
 #include "Sketcher_PropertyArc.h"
 
 /**

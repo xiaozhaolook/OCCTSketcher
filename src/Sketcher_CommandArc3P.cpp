@@ -143,6 +143,7 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 
 			myArc3PAction = Input_1ArcPoint;
 		}
+		//delete tempGcc_Circ2d3Tan;
 	}
 	break;
 	case Input_PolylineArc:
@@ -192,6 +193,7 @@ Standard_Boolean Sketcher_CommandArc3P::MouseInputEvent(const gp_Pnt2d& thePnt2d
 			myRubberCircle->SetCircle(tempGeom_Circle);
             myContext->Redisplay(myRubberCircle,1);
 		}
+		//delete tempGcc_Circ2d3Tan;
 	}
 
 	default:break;
@@ -279,9 +281,11 @@ void Sketcher_CommandArc3P::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 			}
 		}
 		break;
+		//delete tempGcc_Circ2d3Tan;
 	}
 	default:break;
 	}
+
 }
 
 

@@ -1,5 +1,5 @@
 #ifndef Sketcher_SnapLineParallel_H
-#define Sketcher_SnapLineParallel_H Sketcher_SnapLineParallel_H
+#define Sketcher_SnapLineParallel_H
 
 #include "Sketcher_SnapLine.h"
 #include <AIS_ParallelRelation.hxx>

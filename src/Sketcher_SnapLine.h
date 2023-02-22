@@ -1,5 +1,5 @@
 #ifndef Sketcher_SnapLine_H
-#define Sketcher_SnapLine_H Sketcher_SnapLine_H
+#define Sketcher_SnapLine_H
 
 #include "Sketcher_Snap.h"
 

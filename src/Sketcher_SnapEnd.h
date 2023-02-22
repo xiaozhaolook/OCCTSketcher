@@ -1,5 +1,5 @@
 #ifndef Sketcher_SnapEnd_H
-#define Sketcher_SnapEnd_H Sketcher_SnapEnd_H
+#define Sketcher_SnapEnd_H
 
 #include "Sketcher_Snap.h"
 #include "Geom2d_Edge.h"

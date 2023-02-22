@@ -1,8 +1,3 @@
-/**
-* \file Sketcher_PropertyCircle.hxx
-* \brief Header file for the class Sketcher_PropertyCircle
-* \author <a href="mailto:sergmaslov@istel.ru?subject=Sketcher_PropertyCircle.hxx">Sergei Maslov</a>
-*/
 #ifndef Sketcher_PropertyCircle_H
 #define Sketcher_PropertyCircle_H
 

@@ -134,6 +134,7 @@ Standard_Boolean Sketcher_CommandCircleP2Tan::MouseInputEvent(const gp_Pnt2d& th
 					myCircleP2TanAction = Input_1CirclePoint;
 				}
 			}
+			//delete myGcc_Circ2d3Tan;
 		}
 		break;
 	default:break;
@@ -204,6 +205,7 @@ void Sketcher_CommandCircleP2Tan::MouseMoveEvent(const gp_Pnt2d& thePnt2d)
 				tempGeom_Circle->SetRadius(SKETCHER_RADIUS);
                 myContext->Redisplay(myRubberCircle,1);
 			}
+			//delete myGcc_Circ2d3Tan;
 		}
 		else
 		{

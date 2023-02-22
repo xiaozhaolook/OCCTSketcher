@@ -1,5 +1,5 @@
 #ifndef SKETCHER_COMMAND_H
-#define SKETCHER_COMMAND_H SKETCHER_COMMAND_H
+#define SKETCHER_COMMAND_H 
 
 #include <Standard_Macro.hxx>
 #include <Standard_Transient.hxx>

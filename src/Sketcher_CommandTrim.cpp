@@ -229,7 +229,7 @@ void Sketcher_CommandTrim::FixObjectPoints()
 				{
 					tempPnt2d = my2dAPI_InterCurveCurve.Point(k);
 					tempU = ElCLib::Parameter(curGeom2d_Edge->Lin2d(), tempPnt2d);
-					if (tempU > curGeom2d_Edge->StartParameter() && tempU < curGeom2d_Edge->EndParameter())
+					//if (tempU > curGeom2d_Edge->StartParameter() && tempU < curGeom2d_Edge->EndParameter())
 						SetParam();
 				}
 				break;

@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandCircle3Tan_H
-#define Sketcher_CommandCircle3Tan_H Sketcher_CommandCircle3Tan_H
+#define Sketcher_CommandCircle3Tan_H 
 
 #include "Sketcher_Command.h"
 #include "Geom2d_Edge.h"

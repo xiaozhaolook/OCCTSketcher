@@ -1,8 +1,3 @@
-/**
-* \file Sketcher_PropertyPoint.hxx
-* \brief Header file for the class Sketcher_PropertyPoint
-* \author <a href="mailto:sergmaslov@istel.ru?subject=Sketcher_PropertyPoint.hxx">Sergei Maslov</a>
-*/
 #ifndef Sketcher_PropertyPoint_H
 #define Sketcher_PropertyPoint_H
 

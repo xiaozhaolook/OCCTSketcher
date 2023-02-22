@@ -1,5 +1,5 @@
 #ifndef Sketcher_SnapNEAREST_H
-#define Sketcher_SnapNEAREST_H Sketcher_SnapNEAREST_H
+#define Sketcher_SnapNEAREST_H
 
 #include "Sketcher_Snap.h"
 #include <Geom2d_Curve.hxx>

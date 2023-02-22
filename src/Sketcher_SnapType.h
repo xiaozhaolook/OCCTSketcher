@@ -1,5 +1,5 @@
 #ifndef Sketcher_SnapType_H
-#define Sketcher_SnapType_H Sketcher_SnapType_H
+#define Sketcher_SnapType_H
 
 enum Sketcher_SnapType
 {

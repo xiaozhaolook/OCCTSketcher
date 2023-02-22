@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandPOINT_H
-#define Sketcher_CommandPOINT_H Sketcher_CommandPOINT_H
+#define Sketcher_CommandPOINT_H 
 
 #include "Sketcher_Command.h"
 #include <AIS_Point.hxx>

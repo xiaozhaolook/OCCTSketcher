@@ -1,8 +1,3 @@
-/**
-* \file Sketcher_PropertyPoint.cxx
-* \brief Implementation file for the class Sketcher_PropertyPoint
-* \author <a href="mailto:sergmaslov@istel.ru?subject=Sketcher_PropertyPoint.cxx">Sergei Maslov</a>
-*/
 #include "Sketcher_PropertyPoint.h"
 
 /**

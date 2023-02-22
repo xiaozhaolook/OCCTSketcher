@@ -1,5 +1,5 @@
 #ifndef Sketcher_CommandLine2P_H
-#define Sketcher_CommandLine2P_H Sketcher_CommandLine2P_H
+#define Sketcher_CommandLine2P_H 
 
 #include "Sketcher_Command.h"
 #include "Geom2d_Edge.h"
