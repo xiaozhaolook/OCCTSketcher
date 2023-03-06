@@ -4,10 +4,10 @@ OCCTSketcher is a 2D sketcher application which are used in CAD software, the fi
 
 https://sourceforge.net/projects/occsketcher/files/occsketcher/
 
-but in present work, OpenCasCade 7.0.0 and Qt 5.10.0 are used.
+but in present work, OpenCasCade 7.7.0 and Qt 5.12.12 are used.
 
 illustration:
-![image](https://github.com/xiaozhaolook/OCCTSketcher/blob/master/sketcher.png)
+![image](https://github.com/YongcanZhou/OCCTSketcher/blob/master/sketcher.png)
 
 
 
